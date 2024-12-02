@@ -1,0 +1,6 @@
+{
+  "tailwindCSS.emmetCompletions": true,
+  //prettier
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+}
