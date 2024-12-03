@@ -4,6 +4,8 @@ import _, { get } from 'lodash';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
+import ProcessTable from '../ProcessTable';
+
 const AdminDashboard = () => {
   const { entries, getEntries } = useEntries();
   const [selection, setSelection] = useState('week');
@@ -59,14 +61,12 @@ const AdminDashboard = () => {
         <div className="border ml-4 mx-2 border-slate-300 rounded-sm aspect-square h-4 items-center justify-center flex ">
           <div
             onClick={() => setOnlyPending(!onlyPending)}
-            className={`aspect-square h-3 transition-all ${
-              onlyPending ? 'bg-slate-300' : 'bg-slate-100'
-            }  rounded-sm`}
+            className={`aspect-square h-3 transition-all ${onlyPending ? 'bg-slate-300' : 'bg-slate-100'
+              }  rounded-sm`}
           ></div>
         </div>
         <span>Show only pending</span>
       </span>
-
       {Object.keys(selectedEntry).map((date) => {
         const title = date;
         const weekEntries = selectedEntry[date];
