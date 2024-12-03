@@ -138,10 +138,9 @@ root.render(
         <Route
           path="/"
           element={
-            // <ProtectedRoute>
-            //   <Index />
-            // </ProtectedRoute>
-            <Index />
+            <ProtectedRoute>
+              <Index />
+            </ProtectedRoute>
           }
         >
           <Route path="/" element={<AdminDashboard />} />
