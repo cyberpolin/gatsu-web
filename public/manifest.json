@@ -3,9 +3,34 @@
   "name": "Create React App Sample",
   "icons": [
     {
-      "src": "gatsu.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "gatsu_16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "gatsu_32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "gatsu_96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "gatsu_180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "gatsu_300.png",
+      "sizes": "300x300",
+      "type": "image/png"
+    },
+    {
+      "src": "gatsu_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
