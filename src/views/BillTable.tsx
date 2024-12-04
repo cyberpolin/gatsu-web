@@ -2,7 +2,7 @@ import { subtract } from "lodash"
 import type { InvoiceData, Concept } from "../utils/types"
 import currency from "currency.js"
 
-const ProcessTable = () => {
+const BillTable = () => {
     const data = {
         "from": {
             "name": "John Doe",
@@ -40,29 +40,37 @@ const ProcessTable = () => {
 
     const { from, to, concepts } = data
     const sumTotal = concepts.reduce((acc: number, concept: Concept) => acc + Number(concept.amount), 0)
-    const subTotal = currency(sumTotal)
-    const vat = sumTotal * 0.15  // raw vat
-    const Total = sumTotal + vat
+    const subTotal = currency(sumTotal).format({ symbol: '' })
+    const vat = currency(sumTotal * 0.15).format({ symbol: '' }) // raw vat
+    const Total = currency(Number(sumTotal) + Number(vat)).format()
 
     return (
-        <>
-            <div className=" flex flex-wrap justify-center md:justify-between divide-y-8 divide-transparent px-8">
-                <div className="px-5 md:px-0">
+        <div className="container mx-auto px-4">
+            <div className=" flex justify-between  pb-8 md:pb-20 pt-5">
+                <span className="text-black font-extrabold ">invoice # 124</span>
+                <span>
+                    <label className="text-gray-400 text-xs">Due date: </label>
+                    <span className="">23-Nov, 2024</span>
+                </span>
+            </div>
+            <div className=" flex flex-wrap justify-center aling md:justify-between  divide-transparent">
+                <div className="px-5 md:px-0 mb-4 md:mb-0">
                     <label className="text-gray-400 text-xs block">from:</label>
-                    <span className="text-black font-extrabold block">{from.name}</span>
-                    <span className="block">{from.address}</span>
+                    <span className="text-black font-extrabold block mb-3">{from.name}</span>
+                    <span className="block mb-3">{from.address}</span>
                     <div>
                         <label className="text-gray-400 text-xs">Phone: </label>
                         <span className="">{from.phone}</span>
                     </div>
                     <label className="text-gray-400 text-xs ">Email: </label>
                     <span>{from.email}</span>
-
                 </div>
-                <div className="px-5 md:px-0">
-                    <label className="text-gray-400 text-xs block ">to:</label>
-                    <span className="text-black font-extrabold block text-right">{to.name}</span>
-                    <span className="block text-right">{to.address}</span>
+                <div className="px-5 md:px-0 relative">
+                    <span className="absolute right-4 -top-1 ">
+                        <label className="text-gray-400 text-xs block">to:</label>
+                        <span className="text-black font-extrabold block ">{to.name}</span>
+                    </span>
+                    <span className="block text-right mt-[51px] mb-3">{to.address}</span>
                     <div className="text-right">
                         <label className="text-gray-400 text-xs">Phone: </label>
                         <span className="">{to.phone}</span>
@@ -71,34 +79,32 @@ const ProcessTable = () => {
                         <label className="text-gray-400 text-xs">Email: </label>
                         <span>{to.email}</span>
                     </div>
-
                 </div>
             </div>
-            <div className="container mx-auto mt-10 px-8">
+            <div className=" mt-10 ">
                 <table className="min-w-full">
                     <thead >
-                        <tr className=" border-b-2 border-gray-500 rounded-lg ">
-                            <th className="py-2 px-4 text-left text-sm font-medium text-gray-600">QTY.</th>
+                        <tr className=" border-b-2 border-gray-300 rounded-lg ">
+                            <th className="py-2 px-4 text-left text-sm font-medium text-gray-600 w-14 ">QTY.</th>
                             <th className="py-2 px-4 text-left text-sm font-medium text-gray-600">Concept</th>
                             <th className="py-2 px-4  text-sm font-medium text-gray-600 w-28">Unit Price</th>
                             <th className="py-2 px-4 text-left text-sm font-medium text-gray-600 w-10">Amount</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {concepts.map((concept, index: any) => (
-
-                            <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-200'}>
-                                <td className="py-2 px-4 text-sm text-gray-700">{concept.qty}</td>
+                        {concepts.map((concept, index) => (
+                            <tr key={index} className='even:bg-gray-200 odd:bg-white'>
+                                <td className="py-2 px-4 text-sm text-gray-700 text-right">{concept.qty}</td>
                                 <td className="py-2 px-4 text-sm text-gray-700">{concept.concept}</td>
-                                <td className="py-2 px-4 text-sm text-gray-700 text-right">{concept.unitPrice}</td>
-                                <td className="py-2 px-4 text-sm text-gray-700 text-right ">{concept.amount}</td>
+                                <td className="py-2 px-4 text-sm text-gray-700 text-right">{currency(concept.unitPrice).format({ symbol: '' })}</td>
+                                <td className="py-2 px-4 text-sm text-gray-700 text-right ">{currency(concept.amount).format({ symbol: '' })}</td>
                             </tr>
                         ))}
                     </tbody>
-                    <tfoot className="bg-gray-100">
+                    <tfoot className="">
                         <tr>
                             <td colSpan={3} className="py-2 px-4 text-right font-semibold text-sm text-gray-600">Subtotal</td>
-                            <td className="py-2 px-4 text-sm text-gray-700 text-right">{subTotal.toString()}</td>
+                            <td className="py-2 px-4 text-sm text-gray-700 text-right">{subTotal}</td>
                         </tr>
                         <tr>
                             <td colSpan={3} className="py-2 px-4 text-right font-semibold text-sm text-gray-600">Vat</td>
@@ -111,10 +117,7 @@ const ProcessTable = () => {
                     </tfoot>
                 </table>
             </div>
-        </>
-
-
-
+        </div>
     )
 }
-export default ProcessTable
+export default BillTable

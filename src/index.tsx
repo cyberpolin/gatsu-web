@@ -28,7 +28,7 @@ import Recovery from './views/Recovery';
 import NotFound from './views/NotFound';
 import useAuth from './utils/hooks/UseAuth';
 import Logout from './views/Logout';
-import ProcessTable from './views/ProcessTable';
+import BillTable from './views/BillTable';
 
 const ProtectedRoute = (props: any) => {
   const { redirectPath = '/login', children } = props;
@@ -123,8 +123,8 @@ const router = createBrowserRouter([
     element: <Downloads />,
   },
   {
-    path: '/processTable',
-    element: <ProcessTable />,
+    path: '/bill-details',
+    element: <BillTable />,
   },
 ]);
 
@@ -151,7 +151,7 @@ root.render(
         <Route path={'/logout'} element={<Logout />} />
         <Route path={'/recovery-password'} element={<Recovery />} />
         <Route path={'/*'} element={<NotFound />} />
-        <Route path={'/processTable'} element={<ProcessTable />} />
+        <Route path={'/BillDetails'} element={<BillTable />} />
       </Routes>
       {/* <RouterProvider router={router} /> */}
     </BrowserRouter>
