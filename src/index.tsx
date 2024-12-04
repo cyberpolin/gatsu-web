@@ -65,7 +65,7 @@ root.render(
           <Route path="/" element={<AdminDashboard />} />
           <Route path="/clients" element={<Clients />} />
           <Route path="/tasks" element={<Entries />} />
-          <Route path={'/BillDetails'} element={<BillTable />} />
+          <Route path={'/bill-details'} element={<BillTable />} />
         </Route>
         <Route path={'/login'} element={<Login />} />
         <Route path={'/logout'} element={<Logout />} />
