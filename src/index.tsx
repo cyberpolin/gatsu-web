@@ -28,6 +28,7 @@ import Recovery from './views/Recovery';
 import NotFound from './views/NotFound';
 import useAuth from './utils/hooks/UseAuth';
 import Logout from './views/Logout';
+import TeamTable from './views/TeamTebale';
 
 const ProtectedRoute = (props: any) => {
   const { redirectPath = '/login', children } = props;
@@ -133,13 +134,14 @@ root.render(
         <Route
           path="/"
           element={
-            <ProtectedRoute>
-              <Index />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            //   <Index />
+            // </ProtectedRoute>
+            <Index />
           }
         >
           <Route path="/" element={<AdminDashboard />} />
-          <Route path="/clients" element={<Clients />} />
+          <Route path="/clients" element={<TeamTable />} />
           <Route path="/tasks" element={<Entries />} />
         </Route>
         <Route path={'/login'} element={<Login />} />
