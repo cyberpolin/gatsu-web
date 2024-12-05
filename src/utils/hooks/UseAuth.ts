@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { UserType, StorageUser } from '../types';
 import fetch from '../fetch';
-import { set } from 'lodash';
 
 const useAuth = () => {
   const [user, setUser] = useState<StorageUser | null>(null);

@@ -1,16 +1,13 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../App.css';
 
-import useClients, { ClientType } from '../UseClients';
 import useOrders from '../UseOrders';
 
-const orders = localStorage.getItem('orders');
 const clients = localStorage.getItem('clients');
 
 function Downloads() {
   const navigate = useNavigate();
   const { phone } = useParams() || { phone: '' };
-  const { client } = useClients(phone);
   const { orders } = useOrders(phone);
 
   return (

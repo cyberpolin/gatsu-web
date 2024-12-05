@@ -1,13 +1,8 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../App.css';
-
-import useClients, { ClientType } from '../UseClients';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 
 function Order() {
   const navigate = useNavigate();
-  const { phone } = useParams() || { phone: '' };
-  const { client } = useClients(phone);
 
   return (
     <div

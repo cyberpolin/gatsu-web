@@ -7,7 +7,7 @@ import { useFilter } from './UseFilter';
 
 function App() {
   const [search, setSearch] = useState('');
-  const { addClient, removeClient, updateClient, clients } = useClients();
+  const { clients } = useClients();
   const { fuseSearch } = useFilter({ data: clients, searchTerm: search });
 
   const navigate = useNavigate();

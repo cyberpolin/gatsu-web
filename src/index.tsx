@@ -1,26 +1,10 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  Navigate,
-  Route,
-  RouterProvider,
-  Routes,
-  useLocation,
-} from 'react-router-dom';
-import ClientCrud from './views/ClientCRUD';
-import Client from './views/Client';
-import Orders from './views/Orders';
-import OrderCrud from './views/OrderCRUD';
-import Order from './views/Order';
-import Downloads from './views/download';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Entries from './views/tasks/Entries';
 import Clients from './views/clients/Clients';
-import ClientDashboard from './views/client/ClientDashboard';
 import Index from './views/Index';
 import AdminDashboard from './views/admin/AdminDashboard';
 import Login from './views/Login';
@@ -43,85 +27,10 @@ const ProtectedRoute = (props: any) => {
       console.log('redirect');
       window.location.href = redirectPathWithQuery;
     }
-  }, [user]);
+  }, [user, redirectPathWithQuery]);
 
   return children;
 };
-
-const router = createBrowserRouter([
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/recovery-password',
-    element: <Recovery />,
-  },
-  {
-    path: '/*',
-    element: <NotFound />,
-  },
-  {
-    path: '/',
-    element: <Index />,
-
-    children: [
-      {
-        path: '/',
-        element: <AdminDashboard />,
-      },
-      {
-        path: '/clients',
-        element: <Clients />,
-      },
-      {
-        path: '/tasks',
-        element: <Entries />,
-      },
-      {
-        path: '/orders',
-        element: <Orders />,
-      },
-    ],
-  },
-  {
-    path: '/dashboard/client/:clientId',
-    element: <ClientDashboard />,
-  },
-
-  {
-    path: '/entries',
-    element: <Entries />,
-  },
-  {
-    path: '/clients',
-    element: <App />,
-  },
-  {
-    path: '/clients/new',
-    element: <ClientCrud />,
-  },
-  {
-    path: '/clients/:phone',
-    element: <Client />,
-  },
-  {
-    path: '/orders',
-    element: <Orders />,
-  },
-  {
-    path: '/clients/:phone/orders/new',
-    element: <OrderCrud />,
-  },
-  {
-    path: '/orders/:orderId',
-    element: <Order />,
-  },
-  {
-    path: '/downloads',
-    element: <Downloads />,
-  },
-]);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

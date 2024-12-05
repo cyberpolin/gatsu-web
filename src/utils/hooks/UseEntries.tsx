@@ -1,7 +1,6 @@
 import fetch from '../fetch';
 import { useEffect, useState } from 'react';
 import { Project } from './UseProjects';
-import { set } from 'react-datepicker/dist/date_utils';
 
 type Entry = {
   id?: string;

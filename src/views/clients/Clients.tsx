@@ -1,4 +1,3 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
 import Input from '../../components/UI/Input';
 import { useState } from 'react';
 import UseClients from '../../utils/hooks/UseClients';
@@ -7,10 +6,8 @@ import useProjects from '../../utils/hooks/UseProjects';
 import Button from '../../components/UI/Button';
 
 function Clients() {
-  const navigate = useNavigate();
   const { clients, addClient } = UseClients();
   const { projects, addProject } = useProjects();
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedClients, setSelectedClients] = useState<string[]>([]);
