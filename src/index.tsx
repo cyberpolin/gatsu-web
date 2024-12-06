@@ -28,7 +28,7 @@ import Recovery from './views/Recovery';
 import NotFound from './views/NotFound';
 import useAuth from './utils/hooks/UseAuth';
 import Logout from './views/Logout';
-import TeamTable from './views/TeamTebale';
+import TeamTable from './views/TeamTable';
 
 const ProtectedRoute = (props: any) => {
   const { redirectPath = '/login', children } = props;

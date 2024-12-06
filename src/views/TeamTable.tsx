@@ -25,23 +25,19 @@ const TeamTable = () => {
       id: 4,
       name: 'Smith',
       score: 2,
-      skills: [
-        'Fullstack Developer',
-        'Angular',
-        'Expressdsfsdfsdfsdfsdfsdfsdfwerwerwefdesfweffdsm,ktgrwfefvf',
-      ],
+      skills: ['Fullstack Developer', 'Angular', 'Express'],
       hourRate: 40,
     },
   ];
   return (
     <div className="container mx-auto p-4 bg-white border border-gray-200 border-1 rounded-sm">
-      <div className=" flex flex-wrap  sm:justify-between pb-8 md:pb-20 gap-y-3 sm:gap-0 ">
+      <div className=" flex flex-wrap sm:justify-between pb-8 md:pb-14 gap-y-3 sm:gap-0 ">
         <span className="text-black font-extrabold ">Team</span>
       </div>
-      <div className=" mt-10 overflow-x-scroll">
+      <div className=" overflow-x-scroll">
         <table className="min-w-full table-fixed">
           <thead>
-            <tr className="border-b-2 border-gray-300 ">
+            <tr className="border-b-2 border-gray-300">
               <th className="py-2 px-4 text-left text-sm font-medium text-gray-600 w-14">
                 Score
               </th>
@@ -57,19 +53,17 @@ const TeamTable = () => {
             </tr>
           </thead>
           <tbody>
-            {TEAM.map((person) => (
-              <tr key={person.id} className="even:bg-gray-100 odd:bg-white">
+            {TEAM.map(({ id, score, name, skills, hourRate }) => (
+              <tr key={id} className="even:bg-gray-100 odd:bg-white">
                 <td className="py-2 px-4 text-sm text-gray-700 text-right">
-                  {person.score}
+                  {score}
                 </td>
-                <td className="py-2 px-4 text-sm text-gray-700">
-                  {person.name}
-                </td>
-                <td className="py-2 px-4 text-sm text-gray-700  truncate max-w-[150px] md:max-w-[10px]">
-                  {person.skills}
+                <td className="py-2 px-4 text-sm text-gray-700">{name}</td>
+                <td className="py-2 px-4 text-sm text-gray-700 truncate max-w-[150px] md:max-w-[10px]">
+                  {skills}
                 </td>
                 <td className="py-2 px-4 text-sm text-gray-700 text-right">
-                  {person.hourRate}
+                  {hourRate}
                 </td>
               </tr>
             ))}
