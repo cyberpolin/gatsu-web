@@ -1,5 +1,5 @@
 import { SyntheticEvent, useState, } from 'react'
-import SkeletonRow from '../components/InfiniteScroll';
+import SkeletonRow from '../components/SketelonRow';
 const data = [
   {
     id: 1,
