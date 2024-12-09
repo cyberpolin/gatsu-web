@@ -38,7 +38,7 @@ const InputIcon: React.FC<InputProps> = ({ placeholder, styles }) => {
               : submitted
               ? 'border-green-500'
               : 'border-gray-300'
-          } ${styles}`,
+          } ${styles ?? ''}`,
         )}
       />
       {error && (
