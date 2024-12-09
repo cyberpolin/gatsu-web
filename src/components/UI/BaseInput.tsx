@@ -6,7 +6,7 @@ interface InputProps {
   styles?: string;
 }
 
-const InputIcon: React.FC<InputProps> = ({ placeholder, styles }) => {
+const BaseInput: React.FC<InputProps> = ({ placeholder, styles }) => {
   const [value, setValue] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
   const [check, setcheck] = useState<boolean>(false);
@@ -57,4 +57,4 @@ const InputIcon: React.FC<InputProps> = ({ placeholder, styles }) => {
   );
 };
 
-export default InputIcon;
+export default BaseInput;
