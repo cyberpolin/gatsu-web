@@ -23,7 +23,7 @@ const InputIcon: React.FC<InputProps> = ({ placeholder, styles }) => {
   };
 
   return (
-    <div>
+    <div className="relative w-6/12 fill-green-500">
       <input
         type="text"
         placeholder={placeholder}
@@ -31,7 +31,7 @@ const InputIcon: React.FC<InputProps> = ({ placeholder, styles }) => {
         onChange={(e) => setValue(e.target.value)}
         onBlur={handlevalidation}
         className={twMerge(
-          `border-2 p-2 rounded-md transition-colors duration-300 w-6/12 
+          `border-2 p-2 rounded-md transition-colors duration-300 w-full
           ${
             error
               ? 'border-red-500'
@@ -40,6 +40,12 @@ const InputIcon: React.FC<InputProps> = ({ placeholder, styles }) => {
               : 'border-gray-300'
           } ${styles ?? ''}`,
         )}
+      />
+      <Checkbox
+        cssClasses={'absolute top-[8px] right-2'}
+        color={''}
+        height="25px"
+        width="25px"
       />
       {error && (
         <p className="text-red-500 text-sm mt-1 ml-2">{errorMessaje}</p>
