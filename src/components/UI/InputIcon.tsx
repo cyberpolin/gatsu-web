@@ -9,7 +9,7 @@ interface InputProps {
 const InputIcon: React.FC<InputProps> = ({ placeholder, styles }) => {
   const [value, setValue] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
-  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [check, setcheck] = useState<boolean>(false);
   const [errorMessaje, setErrorMessaje] = useState<string>('');
 
   const handlevalidation = () => {
@@ -18,7 +18,7 @@ const InputIcon: React.FC<InputProps> = ({ placeholder, styles }) => {
       setErrorMessaje('Empty file');
     } else {
       setError(false);
-      setSubmitted(true);
+      setcheck(true);
     }
   };
 
@@ -35,18 +35,20 @@ const InputIcon: React.FC<InputProps> = ({ placeholder, styles }) => {
           ${
             error
               ? 'border-red-500'
-              : submitted
+              : check
               ? 'border-green-500'
               : 'border-gray-300'
           } ${styles ?? ''}`,
         )}
       />
-      <Checkbox
-        cssClasses={'absolute top-[8px] right-2'}
-        color={''}
-        height="25px"
-        width="25px"
-      />
+      {check && (
+        <Checkbox
+          cssClasses={'absolute top-[8px] right-2'}
+          color={''}
+          height="25px"
+          width="25px"
+        />
+      )}
       {error && (
         <p className="text-red-500 text-sm mt-1 ml-2">{errorMessaje}</p>
       )}
