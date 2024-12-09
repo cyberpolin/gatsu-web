@@ -13,6 +13,7 @@ const InputIcon: React.FC<InputProps> = ({ placeholder, styles }) => {
   const [errorMessaje, setErrorMessaje] = useState<string>('');
 
   const handlevalidation = () => {
+    setcheck(false);
     if (value.trim() === '') {
       setError(true);
       setErrorMessaje('Empty file');
