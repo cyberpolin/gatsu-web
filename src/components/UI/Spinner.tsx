@@ -1,15 +1,20 @@
+import { twMerge } from 'tailwind-merge';
 const Spinner = ({
   white,
   loading,
+  styles = '',
 }: {
   white?: boolean;
   loading?: boolean;
+  styles?: string;
 }) => {
   return (
     <svg
-      className={`animate-spin h-5 w-5 mr-2 -ml-6 ${
-        white ? 'text-white' : 'text-green-500'
-      } ${loading ? 'opacity-100' : 'opacity-0'}`}
+      className={twMerge(
+        `animate-spin h-4 w-4 mr-2 ${white ? 'text-white' : 'text-green-500'} ${
+          loading ? 'opacity-100' : 'opacity-0'
+        } ${styles}`,
+      )}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

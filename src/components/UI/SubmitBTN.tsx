@@ -2,21 +2,27 @@ import { twMerge } from 'tailwind-merge';
 import Spinner from './Spinner';
 
 interface submitBTN {
-  text: string;
+  label: string;
   styles?: string;
+  isLoading?: boolean;
   handlesubmit: () => void;
 }
 
-const SubmitBTN: React.FC<submitBTN> = ({ text, handlesubmit, styles }) => {
+const SubmitBTN: React.FC<submitBTN> = ({
+  label,
+  styles = '',
+  isLoading = false,
+  handlesubmit,
+}) => {
   return (
     <button
       className={twMerge(
-        `bg-green-500 rounded-sm py-2 px-8 flex  first:ml-3 ${styles ?? ''} `,
+        `bg-green-500 rounded-md py-3 px-8 flex items-center text-white font-medium text-xl ${styles}`,
       )}
       onClick={handlesubmit}
     >
-      <Spinner white loading />
-      {text}
+      <Spinner white loading={true} />
+      <span>{label}</span>
     </button>
   );
 };
