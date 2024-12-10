@@ -4,9 +4,14 @@ import { Checkbox } from 'react-ionicons';
 interface InputProps {
   placeholder: string;
   styles?: string;
+  inputWidth?: string;
 }
 
-const BaseInput: React.FC<InputProps> = ({ placeholder, styles }) => {
+const BaseInput: React.FC<InputProps> = ({
+  placeholder,
+  styles = '',
+  inputWidth = '',
+}) => {
   const [value, setValue] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
   const [check, setcheck] = useState<boolean>(false);
@@ -24,7 +29,7 @@ const BaseInput: React.FC<InputProps> = ({ placeholder, styles }) => {
   };
 
   return (
-    <div className="relative w-6/12 fill-green-500">
+    <div className={twMerge(`relative w-full fill-green-500 ${inputWidth}`)}>
       <input
         type="text"
         placeholder={placeholder}
@@ -39,7 +44,7 @@ const BaseInput: React.FC<InputProps> = ({ placeholder, styles }) => {
               : check
               ? 'border-green-500'
               : 'border-gray-300'
-          } ${styles ?? ''}`,
+          } ${styles}`,
         )}
       />
       {check && (
