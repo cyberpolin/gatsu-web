@@ -1,9 +1,8 @@
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
 import { useEffect, useState } from 'react';
 import useAuth from '../utils/hooks/UseAuth';
-import { UserType } from '../utils/types';
 
 const USER_PASS = [
   {
@@ -27,7 +26,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { hasFirstUser, login, user, createUser, loading, error } = useAuth();
+  const { hasFirstUser, login, user, loading, error } = useAuth();
 
   const { search } = useLocation();
 

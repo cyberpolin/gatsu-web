@@ -1,9 +1,7 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useEntries from '../../utils/hooks/UseEntries';
 import Input from '../../components/UI/Input';
 import { useState } from 'react';
-import { Calendar, CalendarOutline } from 'react-ionicons';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import PickDate from '../../components/PickDate';
 import ProjectSelector from './ProjectSelector';

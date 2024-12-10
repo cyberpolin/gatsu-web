@@ -1,6 +1,4 @@
 // useFilter.ts
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { ClientType } from './UseClients';
 

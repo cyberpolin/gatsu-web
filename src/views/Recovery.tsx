@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 import Input from '../components/UI/Input';
-import Loading from '../components/UI/Loading';
-import Spinner from '../components/UI/Spinner';
 import { useState } from 'react';
 import Button from '../components/UI/Button';
 
