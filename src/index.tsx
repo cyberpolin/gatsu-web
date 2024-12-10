@@ -4,7 +4,6 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Entries from './views/tasks/Entries';
-import Clients from './views/clients/Clients';
 import Index from './views/Index';
 import AdminDashboard from './views/admin/AdminDashboard';
 import Login from './views/Login';
@@ -13,6 +12,8 @@ import NotFound from './views/NotFound';
 import useAuth from './utils/hooks/UseAuth';
 import Logout from './views/Logout';
 import BillTable from './views/BillTable';
+import TeamTable from './views/TeamTable';
+import Clients from './views/clients/Clients';
 
 const ProtectedRoute = (props: any) => {
   const { redirectPath = '/login', children } = props;
@@ -48,6 +49,7 @@ root.render(
         >
           <Route path="/" element={<AdminDashboard />} />
           <Route path="/clients" element={<Clients />} />
+          <Route path="/team" element={<TeamTable />} />
           <Route path="/tasks" element={<Entries />} />
           <Route path={'/bill-details'} element={<BillTable />} />
         </Route>

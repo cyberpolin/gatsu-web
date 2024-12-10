@@ -1,4 +1,4 @@
-import type { InvoiceData, Concept } from '../utils/types';
+import type { Concept } from '../utils/types';
 import currency from 'currency.js';
 
 const BillTable = () => {
@@ -47,7 +47,7 @@ const BillTable = () => {
   const Total = currency(Number(sumTotal) + Number(vat)).format();
 
   return (
-    <div className="container mx-auto p-4 bg-white border border-gray-200 border-1 rounded-sm">
+    <div className="container mx-auto p-8 bg-white border border-gray-200 border-1 rounded-md">
       <div className=" flex flex-wrap justify-center sm:justify-between pb-8 md:pb-20 gap-y-3 sm:gap-0 ">
         <span className="text-black font-extrabold ">invoice # 124</span>
         <span>
