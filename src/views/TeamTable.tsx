@@ -1,3 +1,5 @@
+import Loading from '../components/UI/Loading';
+
 const TeamTable = () => {
   const TEAM = [
     {
