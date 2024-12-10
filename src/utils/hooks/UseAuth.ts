@@ -20,7 +20,7 @@ const useAuth = () => {
 
   const createUser = (user: UserType) => {
     try {
-      const res = localStorage.setItem('gatsu-user', JSON.stringify(user));
+      localStorage.setItem('gatsu-user', JSON.stringify(user));
       setUser({
         loaded: true,
         user,

@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Button from '../components/UI/Button';
 
 const Recovey = () => {
+  //TODO: fix after implementation
+
   const [loading, setLoading] = useState(false);
 
   return (

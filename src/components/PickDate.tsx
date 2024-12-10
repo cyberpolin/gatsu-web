@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { set } from 'react-datepicker/dist/date_utils';
 import { CalendarOutline } from 'react-ionicons';
 
 const PickDate = ({
@@ -10,7 +9,7 @@ const PickDate = ({
   onDateSelected: (date: Date) => void;
   selectedDate: Date | null;
 }) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const startDate = new Date();
   const [showCalendar, setShowCalendar] = useState(false);
 
   return (
