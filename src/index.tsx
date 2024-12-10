@@ -11,7 +11,7 @@ import Recovery from './views/Recovery';
 import NotFound from './views/NotFound';
 import useAuth from './utils/hooks/UseAuth';
 import Logout from './views/Logout';
-import AddMenber from './views/AddMember';
+import AddMember from './views/AddMember';
 import BillTable from './views/BillTable';
 import TeamTable from './views/TeamTable';
 import Clients from './views/clients/Clients';
@@ -52,7 +52,7 @@ root.render(
           <Route path="/clients" element={<Clients />} />
           <Route path="/team" element={<TeamTable />} />
           <Route path="/tasks" element={<Entries />} />
-          <Route path="/add-member" element={<AddMenber />} />
+          <Route path="/add-member" element={<AddMember />} />
           <Route path={'/bill-details'} element={<BillTable />} />
         </Route>
         <Route path={'/login'} element={<Login />} />
