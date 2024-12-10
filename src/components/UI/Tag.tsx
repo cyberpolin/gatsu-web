@@ -1,7 +1,13 @@
 import { CloseCircleOutline, CloseCircle } from 'react-ionicons';
 import { twMerge } from 'tailwind-merge';
 
-const Tag = ({ label, styles = '' }: { label: string; styles?: string }) => {
+interface Tag {
+  label: string;
+  styles?: string;
+  handleClose: () => void;
+}
+
+const Tag: React.FC<Tag> = ({ label, styles = '', handleClose }) => {
   return (
     <span
       className={twMerge(
@@ -9,7 +15,7 @@ const Tag = ({ label, styles = '' }: { label: string; styles?: string }) => {
       )}
     >
       {label}
-      <div className="relative group" onClick={() => alert('')}>
+      <div className="relative group" onClick={() => handleClose()}>
         <CloseCircle
           cssClasses="absolute group-hover:opacity-100 opacity-0 !fill-white transition-opacity"
           height="19px"
