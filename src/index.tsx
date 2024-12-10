@@ -12,20 +12,19 @@ import Recovery from './views/Recovery';
 import NotFound from './views/NotFound';
 import useAuth from './utils/hooks/UseAuth';
 import Logout from './views/Logout';
+import BillTable from './views/BillTable';
 
 const ProtectedRoute = (props: any) => {
   const { redirectPath = '/login', children } = props;
   const { user } = useAuth();
-  console.log('user P', user);
   const { pathname, search } = useLocation();
 
   const redirectPathWithQuery = `${redirectPath}?redirect=${pathname}${search}`;
 
   useEffect(() => {
-    console.log('user', user);
     if (user?.loaded && !user?.user) {
-      console.log('redirect');
-      window.location.href = redirectPathWithQuery;
+      // TODO redirect to login
+      // window.location.href = redirectPathWithQuery;
     }
   }, [user, redirectPathWithQuery]);
 
@@ -50,13 +49,13 @@ root.render(
           <Route path="/" element={<AdminDashboard />} />
           <Route path="/clients" element={<Clients />} />
           <Route path="/tasks" element={<Entries />} />
+          <Route path={'/bill-details'} element={<BillTable />} />
         </Route>
         <Route path={'/login'} element={<Login />} />
         <Route path={'/logout'} element={<Logout />} />
         <Route path={'/recovery-password'} element={<Recovery />} />
         <Route path={'/*'} element={<NotFound />} />
       </Routes>
-      {/* <RouterProvider router={router} /> */}
     </BrowserRouter>
   </React.StrictMode>,
 );
