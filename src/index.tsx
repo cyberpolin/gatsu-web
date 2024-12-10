@@ -28,6 +28,7 @@ import Recovery from './views/Recovery';
 import NotFound from './views/NotFound';
 import useAuth from './utils/hooks/UseAuth';
 import Logout from './views/Logout';
+import FormAddPerson from './views/AddMember';
 
 const ProtectedRoute = (props: any) => {
   const { redirectPath = '/login', children } = props;
@@ -141,6 +142,7 @@ root.render(
           <Route path="/" element={<AdminDashboard />} />
           <Route path="/clients" element={<Clients />} />
           <Route path="/tasks" element={<Entries />} />
+          <Route path="/add-member" element={<FormAddPerson />} />
         </Route>
         <Route path={'/login'} element={<Login />} />
         <Route path={'/logout'} element={<Logout />} />

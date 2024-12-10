@@ -11,9 +11,9 @@ const Spinner = ({
   return (
     <svg
       className={twMerge(
-        `animate-spin h-4 w-4 mr-2 ${white ? 'text-white' : 'text-green-500'} ${
-          loading ? 'opacity-100' : 'opacity-0'
-        }
+        `animate-spin h-4 w-4 mr-2 -ml-4 ${
+          white ? 'text-white' : 'text-green-500'
+        } ${loading ? 'opacity-100' : 'opacity-0'}
         transition-opacity 
         ${styles}`,
       )}
