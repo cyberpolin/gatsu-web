@@ -5,7 +5,7 @@ import { useState } from 'react';
 const AddMember = () => {
   const [skills, setSkills] = useState<string[]>([]);
   return (
-    <div className="mx-auto px-8  bg-white border border-gray-100 rounded-sm">
+    <div className="mx-auto px-8 bg-white border border-gray-100 rounded-md">
       <h1 className="text-xl font-medium mt-5 mb-6">Add team member</h1>
       <div className="flex flex-col justify-between gap-y-20">
         <div>
