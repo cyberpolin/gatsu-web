@@ -1,29 +1,27 @@
 import { CloseCircleOutline, CloseCircle } from 'react-ionicons';
 import { twMerge } from 'tailwind-merge';
-import { useState } from 'react';
 
-const Tag = ({ text, styles }: { text: string; styles?: string }) => {
-  const [isHoaver, setIsHoaver] = useState(false);
-
+const Tag = ({ label, styles = '' }: { label: string; styles?: string }) => {
   return (
-    <div>
-      <span
-        className={twMerge(
-          `bg-green-500 text-white flex gap-1 items-center px-2 rounded-sm cursor-pointer fill-white text-sm font-semibold ${
-            styles ?? ''
-          }`,
-        )}
-        onMouseEnter={() => setIsHoaver(true)}
-        onMouseLeave={() => setIsHoaver(false)}
-      >
-        {text}
-        {isHoaver ? (
-          <CloseCircle color={``} height="10px" width="10px" />
-        ) : (
-          <CloseCircleOutline color={``} height="16px" width="16px" />
-        )}
-      </span>
-    </div>
+    <span
+      className={twMerge(
+        `bg-green-500 text-white flex gap-1 items-center px-2 py-1 rounded-md cursor-pointer text-md font-sm w-fit ${styles}`,
+      )}
+    >
+      {label}
+      <div className="relative group" onClick={() => alert('')}>
+        <CloseCircle
+          cssClasses="absolute group-hover:opacity-100 opacity-0 !fill-white transition-opacity"
+          height="19px"
+          width="19px"
+        />
+        <CloseCircleOutline
+          cssClasses="group-hover:opacity-0 !text-white transition-opacity"
+          height="19px"
+          width="19px"
+        />
+      </div>
+    </span>
   );
 };
 
