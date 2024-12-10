@@ -17,11 +17,11 @@ const SubmitBTN: React.FC<submitBTN> = ({
   return (
     <button
       className={twMerge(
-        `bg-green-500 rounded-md py-3 px-8 flex items-center text-white font-medium text-xl ${styles}`,
+        `bg-green-500 rounded-md py-3 px-8 flex items-center text-white font-medium text-lg ${styles}`,
       )}
       onClick={handlesubmit}
     >
-      <Spinner white loading={true} />
+      <Spinner white loading={isLoading} />
       <span>{label}</span>
     </button>
   );
