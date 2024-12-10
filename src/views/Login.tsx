@@ -1,33 +1,14 @@
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
 import { useEffect, useState } from 'react';
 import useAuth from '../utils/hooks/UseAuth';
-import { UserType } from '../utils/types';
-
-const USER_PASS = [
-  {
-    user: 'cyberpolin@gmail.com',
-    pass: 'rt459pk1',
-    type: 'admin',
-  },
-  {
-    user: 'jonatansimpleplan89@gmail.com',
-    pass: '1223456',
-    type: 'dev',
-  },
-  {
-    user: 'junm@nuvote.com',
-    pass: 'rt459pk1',
-    type: 'client',
-  },
-];
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { hasFirstUser, login, user, createUser, loading, error } = useAuth();
+  const { hasFirstUser, login, user, loading, error } = useAuth();
 
   const { search } = useLocation();
 
@@ -39,7 +20,7 @@ const Login = () => {
     if (user?.loaded && user?.user && redirect) {
       navigate(redirect);
     }
-  }, [user]);
+  }, [user, redirect, navigate]);
 
   const title = !hasFirstUser ? 'Log In' : 'Create your first user';
   const subTitle = !hasFirstUser

@@ -1,14 +1,10 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
 import useEntries from '../../utils/hooks/UseEntries';
 import Input from '../../components/UI/Input';
 import { useState } from 'react';
-import { Calendar, CalendarOutline } from 'react-ionicons';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import PickDate from '../../components/PickDate';
 import ProjectSelector from './ProjectSelector';
 function Entries() {
-  const navigate = useNavigate();
   const { entries, addEntry } = useEntries();
 
   const [task, setTask] = useState('');
@@ -34,22 +30,6 @@ function Entries() {
       p-4
     "
     >
-      {/* Top navigation like mobile with back button */}
-      <div
-        className="
-        w-full
-        flex
-        items-center
-        justify-between
-        border-b
-      "
-      >
-        <a onClick={() => navigate(-1)} href="#">
-          Back
-        </a>
-        <Link to="./orders/new">New Order</Link>
-      </div>
-
       <div className="border w-full rounded-md p-10 mt-6 bg-slate-50 ">
         <div className="border p-2">
           <div className=" grid grid-cols-4 gap-4">

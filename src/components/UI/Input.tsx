@@ -14,7 +14,7 @@ type InputProps = {
     ClassAttributes<HTMLTextAreaElement> &
     TextareaHTMLAttributes<HTMLTextAreaElement>);
 
-export default (props: InputProps) => {
+const Input = (props: InputProps) => {
   const { name, multiline } = props;
   if (multiline)
     return (
@@ -38,3 +38,5 @@ export default (props: InputProps) => {
     />
   );
 };
+
+export default Input;

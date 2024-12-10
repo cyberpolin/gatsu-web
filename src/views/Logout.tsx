@@ -6,7 +6,7 @@ const Logout = () => {
   const { destroyUser } = useAuth();
   useEffect(() => {
     destroyUser();
-  }, []);
+  }, [destroyUser]);
 
   return (
     <div className="flex flex-col h-screen justify-center items-center bg-slate-100">
@@ -19,7 +19,6 @@ const Logout = () => {
       >
         <h2 className="font-semibold mb-2 text-slate-900">See you soon!</h2>
         <p className="mb-8 text-slate-600 text-8xl ">Bye!</p>
-
         <Link className="text-green-600 underline text-sm " to="/login">
           Log In
         </Link>

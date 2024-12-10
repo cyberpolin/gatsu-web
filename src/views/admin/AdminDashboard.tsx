@@ -1,11 +1,11 @@
 import moment from 'moment';
 import useEntries from '../../utils/hooks/UseEntries';
-import _, { get } from 'lodash';
+import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 const AdminDashboard = () => {
-  const { entries, getEntries } = useEntries();
+  const { entries } = useEntries();
   const [selection, setSelection] = useState('week');
   const getWeekRange = (date: Date) => {
     const week = moment(date).week();

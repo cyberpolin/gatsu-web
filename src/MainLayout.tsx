@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  Cash,
   CashOutline,
   ChevronBack,
   ChevronForward,
@@ -110,6 +109,21 @@ const Sidebar = ({ menuOpen, toggleMenu }: MenuProps) => {
       link: '/clients',
     },
     {
+      title: 'Billing Example',
+      icon: (
+        <CashOutline
+          style={{
+            width: '18px',
+            height: '18px',
+          }}
+          cssClasses={
+            '!text-green-500 mr-2 group-hover:translate-x-2 transition-all delay-100 duration-300 '
+          }
+        />
+      ),
+      link: '/bill-details',
+    },
+    {
       title: 'Team',
       icon: (
         <CodeOutline
@@ -122,7 +136,7 @@ const Sidebar = ({ menuOpen, toggleMenu }: MenuProps) => {
           }
         />
       ),
-      link: '/clients',
+      link: '/team',
     },
     {
       title: 'Log out',
