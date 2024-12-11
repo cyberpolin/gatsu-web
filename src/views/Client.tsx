@@ -1,9 +1,8 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../App.css';
 
-import useClients, { ClientType } from '../UseClients';
+import useClients from '../UseClients';
 import useOrders from '../UseOrders';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 
 function ClientCrud() {
   const navigate = useNavigate();

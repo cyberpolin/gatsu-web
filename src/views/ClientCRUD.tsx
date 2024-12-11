@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import '../App.css';
 import Input from '../components/UI/Input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as yup from 'yup';
 import useClients from '../UseClients';
 

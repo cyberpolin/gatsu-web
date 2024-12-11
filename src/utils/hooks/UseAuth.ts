@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { UserType, StorageUser } from '../types';
 import fetch from '../fetch';
-import { set } from 'lodash';
 
 const useAuth = () => {
   const [user, setUser] = useState<StorageUser | null>(null);
@@ -21,7 +20,7 @@ const useAuth = () => {
 
   const createUser = (user: UserType) => {
     try {
-      const res = localStorage.setItem('gatsu-user', JSON.stringify(user));
+      localStorage.setItem('gatsu-user', JSON.stringify(user));
       setUser({
         loaded: true,
         user,
