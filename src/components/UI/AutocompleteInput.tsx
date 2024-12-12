@@ -28,7 +28,11 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
   const [error, setError] = useState<boolean>(false);
   const [check, setcheck] = useState<boolean>(false);
   const [errorMessaje, setErrorMessaje] = useState<string>('');
-  const regex = new RegExp('^' + value + '.+', 'i');
+  const spaceCharactersValue = value.replace(
+    /[.*+?^=!:${}()|\[\]\/\\]/g,
+    '\\$&',
+  );
+  const regex = new RegExp('^' + spaceCharactersValue, 'i');
 
   const getSkills = async () => {
     try {
@@ -49,8 +53,9 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
   };
 
   useEffect(() => {
-    getSkills();
-
+    if (skills.length == 0) {
+      getSkills();
+    }
     if (value) {
       const filteredSkills = skills.filter(({ name }: { name: string }) =>
         regex.test(name),
@@ -69,8 +74,10 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
     }
     if (event.key === 'Enter') {
       handlevalidation();
-      handleValue(value);
-      postSkills(value);
+      const capitalizeValue = value.charAt(0).toUpperCase() + value.slice(1);
+      handleValue(capitalizeValue);
+      postSkills(capitalizeValue);
+      getSkills();
       setValue('');
     }
   };
@@ -92,7 +99,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       <div className={twMerge(`relative w-full fill-green-500 ${inputWidth}`)}>
         <input
           className={twMerge(
-            ` absolute bg-transparent border-2 p-2 rounded-md transition-colors duration-300 w-full
+            `capitalize absolute bg-transparent border-2 p-2 rounded-md transition-colors duration-300 w-full
         ${
           error
             ? 'border-red-500'
@@ -110,7 +117,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
           placeholder={placeholder}
           onBlur={handlevalidation}
         />
-        <div className="p-2 h-[44px] rounded-md border-2 border-transparent w-full text-gray-400">
+        <div className=" capitalize p-2 h-[44px] rounded-md border-2 border-transparent w-full text-gray-400">
           {suggestions}
         </div>
         {check && (
