@@ -3,6 +3,7 @@ import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
 import { useEffect, useState } from 'react';
 import useAuth from '../utils/hooks/UseAuth';
+import BaseInput from '../components/UI/BaseInput';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -41,23 +42,13 @@ const Login = () => {
         <h2 className="font-semibold mb-2 text-slate-900">{title}</h2>
         <p className="mb-8 text-slate-600 text-sm ">{subTitle}</p>
         <form>
-          {showUserName && (
-            <Input
-              className="mr-2"
-              name="Username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          )}
-          <Input
-            className="mr-2"
-            name="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            className="mr-2"
-            name="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="text-left divide-y-[15px] divide-transparent">
+            {showUserName && (
+              <BaseInput placeholder="Username" handleValue={setUsername} />
+            )}
+            <BaseInput placeholder="Email" handleValue={setEmail} />
+            <BaseInput placeholder="Password" handleValue={setPassword} />
+          </div>
           <p>
             {error && <span className="text-red-500 text-sm">{error}</span>}
           </p>
@@ -68,6 +59,7 @@ const Login = () => {
               e.preventDefault();
               try {
                 //@ts-ignore
+                console.log({ email, password, username });
                 await login({ email, password, username });
               } catch (error: any) {
                 console.log('error', error);
