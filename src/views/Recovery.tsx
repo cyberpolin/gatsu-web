@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Input from '../components/UI/Input';
 import { useState } from 'react';
 import Button from '../components/UI/Button';
+import SubmitBTN from '../components/UI/SubmitBTN';
 
 const Recovey = () => {
   //TODO: fix after implementation
@@ -26,10 +27,11 @@ const Recovey = () => {
         </p>
         <form>
           <Input className="mr-2" name="Email" />
-          <Button white loading={loading}>
-            {' '}
-            Recovery password
-          </Button>
+          <SubmitBTN
+            label="Recovery Password"
+            isLoading={loading}
+            handlesubmit={console.log}
+          />
         </form>
         <Link className="text-green-600 underline text-sm " to="/login">
           I have my password, want to log in

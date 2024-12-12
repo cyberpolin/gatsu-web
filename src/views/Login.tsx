@@ -3,6 +3,7 @@ import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
 import { useEffect, useState } from 'react';
 import useAuth from '../utils/hooks/UseAuth';
+import SubmitBTN from '../components/UI/SubmitBTN';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -61,11 +62,10 @@ const Login = () => {
           <p>
             {error && <span className="text-red-500 text-sm">{error}</span>}
           </p>
-          <Button
-            className={'my-4'}
-            loading={loading}
-            onClick={async (e: any) => {
-              e.preventDefault();
+          <SubmitBTN
+            label={buttonText}
+            isLoading={loading}
+            handlesubmit={async () => {
               try {
                 //@ts-ignore
                 await login({ email, password, username });
@@ -73,9 +73,8 @@ const Login = () => {
                 console.log('error', error);
               }
             }}
-          >
-            {buttonText}
-          </Button>
+            styles="mt-2"
+          />
         </form>
         <Link
           className="text-green-600 underline text-sm "
