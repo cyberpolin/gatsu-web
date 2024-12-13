@@ -46,6 +46,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
   const postSkills = async (name: string) => {
     try {
       const { data } = await fetch.post('/skills', { name });
+      getSkills();
       return data;
     } catch (error) {
       console.error(error);
@@ -60,8 +61,8 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       const filteredSkills = skills.filter(({ name }: { name: string }) =>
         regex.test(name),
       );
-      const Sugestion = filteredSkills[0]?.name;
-      setSuggestions(Sugestion);
+      const sugestion = filteredSkills[0]?.name;
+      setSuggestions(sugestion);
     } else {
       setSuggestions('');
     }
@@ -77,7 +78,6 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       const capitalizeValue = value.charAt(0).toUpperCase() + value.slice(1);
       handleValue(capitalizeValue);
       postSkills(capitalizeValue);
-      getSkills();
       setValue('');
     }
   };
