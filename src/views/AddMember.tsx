@@ -1,6 +1,7 @@
 import BaseInput from '../components/UI/BaseInput';
 import Tag from '../components/UI/Tag';
 import SubmitBTN from '../components/UI/SubmitBTN';
+import AutocompleteInput from '../components/UI/AutocompleteInput';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -90,14 +91,14 @@ const AddMember = () => {
             add as many as you like, just be sure you are work ready on that
             skill.
           </p>
-          {/* <BaseInput
+          <AutocompleteInput
             styles="placeholder:text-[11px] xs:placeholder:text-base"
             placeholder="Add a tag and press enter"
             handleValue={(newValue: string) => {
               const value = newValue.split(/[, ]+/);
               setSkills((oldValue) => [...oldValue, ...value]);
             }}
-          /> */}
+          />
           <div className="flex gap-2 mt-2 flex-wrap">
             {skills.map((skill, index) => (
               <Tag
