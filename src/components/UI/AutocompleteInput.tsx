@@ -23,8 +23,9 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
   handleValue,
 }) => {
   const [skills, setSkills] = useState<Skill[]>([]);
+  const [idSkill, setIdSkill] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
-  const [suggestions, setSuggestions] = useState<string>('');
+  const [suggestions, setSuggestions] = useState<Skill[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [check, setcheck] = useState<boolean>(false);
   const [errorMessaje, setErrorMessaje] = useState<string>('');
@@ -61,23 +62,32 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       const filteredSkills = skills.filter(({ name }: { name: string }) =>
         regex.test(name),
       );
-      const sugestion = filteredSkills[0]?.name;
-      setSuggestions(sugestion);
+      // const sugestion = filteredSkills[0]?.name;
+      setSuggestions(filteredSkills);
     } else {
-      setSuggestions('');
+      setSuggestions([]);
     }
   }, [value]);
 
-  const handleKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKey = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Tab') {
       event.preventDefault();
-      setValue(suggestions);
+      setValue(suggestions[0]?.name);
     }
     if (event.key === 'Enter') {
       handlevalidation();
       const capitalizeValue = value.charAt(0).toUpperCase() + value.slice(1);
+      if (suggestions[0]?.name !== value) {
+        const newSkill = await postSkills(capitalizeValue);
+        console.log('newSkill', newSkill);
+        setIdSkill([...idSkill, newSkill.id]);
+      } else {
+        console.log('suggestions', suggestions[0]);
+        setIdSkill((prevIdSkills) => [...prevIdSkills, suggestions[0]?.id]);
+        console.log(' estoy en idSkill');
+      }
+      console.log('idSkill', idSkill);
       handleValue(capitalizeValue);
-      postSkills(capitalizeValue);
       setValue('');
     }
   };
@@ -118,7 +128,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
           onBlur={handlevalidation}
         />
         <div className=" capitalize p-2 h-[44px] rounded-md border-2 border-transparent w-full text-gray-400">
-          {suggestions}
+          {suggestions[0]?.name}
         </div>
         {check && (
           <Checkbox

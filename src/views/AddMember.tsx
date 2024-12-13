@@ -2,6 +2,7 @@ import BaseInput from '../components/UI/BaseInput';
 import Tag from '../components/UI/Tag';
 import SubmitBTN from '../components/UI/SubmitBTN';
 import AutocompleteInput from '../components/UI/AutocompleteInput';
+import fetch from '../utils/fetch';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -24,6 +25,14 @@ const validationMenber = Yup.object({
 const AddMember = () => {
   const [skills, setSkills] = useState<string[]>([]);
   const [checked, setChecked] = useState(false);
+  const AddPerson = async (member: Member) => {
+    try {
+      const { data } = await fetch.post('/developers', member);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const formik = useFormik<Member>({
     initialValues: {
       name: '',
@@ -36,7 +45,7 @@ const AddMember = () => {
     validateOnBlur: false,
     onSubmit: (values, { resetForm }) => {
       setChecked(true);
-      console.log(values);
+      AddPerson(values);
       setTimeout(() => {
         resetForm();
         setChecked(false);
