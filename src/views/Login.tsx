@@ -59,7 +59,6 @@ const Login = () => {
               e.preventDefault();
               try {
                 //@ts-ignore
-                console.log({ email, password, username });
                 await login({ email, password, username });
               } catch (error: any) {
                 console.log('error', error);
