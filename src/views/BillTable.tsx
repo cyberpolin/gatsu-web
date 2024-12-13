@@ -38,6 +38,15 @@ const BillTable = () => {
     ],
   };
 
+  const SubTitle = () => {
+    return (
+      <span className="flex items-baseline">
+        <span className="text-gray-400 text-sm mr-4">Due date</span>
+        <h3 className="text-black">NOV 23, 2024</h3>
+      </span>
+    );
+  };
+
   const { from, to, concepts } = data;
   const sumTotal = concepts.reduce(
     (acc: number, concept: Concept) => acc + Number(concept.amount),
@@ -48,11 +57,7 @@ const BillTable = () => {
   const Total = currency(Number(sumTotal) + Number(vat)).format();
 
   return (
-    <GeneralContainer
-      title="invoice # 124"
-      subTitle="23-NOV, 2024"
-      label="Due date:"
-    >
+    <GeneralContainer title="invoice # 124" subTitle={SubTitle}>
       <div className=" flex flex-wrap justify-center aling md:justify-between  divide-transparent gap-y-3 sm:gap-0">
         <div className="px-5 md:px-0 mb-4 md:mb-0">
           <label className="text-gray-400 text-xs block">from:</label>
