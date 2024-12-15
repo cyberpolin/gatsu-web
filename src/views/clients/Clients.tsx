@@ -3,7 +3,7 @@ import { useState } from 'react';
 import UseClients from '../../utils/hooks/UseClients';
 import { AddOutline } from 'react-ionicons';
 import useProjects from '../../utils/hooks/UseProjects';
-import Button from '../../components/UI/Button';
+import SubmitBTN from '../../components/UI/SubmitBTN';
 
 function Clients() {
   const { clients, addClient } = UseClients();
@@ -64,16 +64,14 @@ function Clients() {
               value={email}
             />
 
-            <Button
-              onClick={() => {
+            <SubmitBTN
+              handlesubmit={() => {
                 if (email && name) {
                   addClient({ name, email }, cleanForm);
                 }
               }}
-              className="bg-green-500 bg-gree text-white p-2 rounded-md"
-            >
-              Guardar
-            </Button>
+              label="Guardar"
+            />
           </div>
         </div>
         <div className="p-2 mt-4">

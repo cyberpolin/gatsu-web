@@ -4,6 +4,7 @@ import { useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import PickDate from '../../components/PickDate';
 import ProjectSelector from './ProjectSelector';
+import SubmitBTN from '../../components/UI/SubmitBTN';
 function Entries() {
   const { entries, addEntry } = useEntries();
 
@@ -56,8 +57,9 @@ function Entries() {
               selectedProject={selectedProject}
               onProjectSelected={(project) => setSelectedProject(project)}
             />
-            <button
-              onClick={() => {
+            <SubmitBTN
+              label="Guardar"
+              handlesubmit={() => {
                 if (task && hours) {
                   addEntry(
                     {
@@ -70,10 +72,7 @@ function Entries() {
                   );
                 }
               }}
-              className="bg-green-500 text-white p-2 rounded-md"
-            >
-              Guardar
-            </button>
+            />
           </div>
         </div>
         <div className="border p-2 mt-4">
