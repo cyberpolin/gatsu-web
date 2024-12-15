@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import Input from '../components/UI/Input';
 import { useState } from 'react';
 import Button from '../components/UI/Button';
+import BaseInput from '../components/UI/BaseInput';
 
 const Recovey = () => {
   //TODO: fix after implementation
@@ -25,7 +25,11 @@ const Recovey = () => {
           your password.
         </p>
         <form>
-          <Input className="mr-2" name="Email" />
+          <BaseInput
+            placeholder="Email"
+            inputType="email"
+            handleValue={console.log}
+          />
           <Button white loading={loading}>
             {' '}
             Recovery password
