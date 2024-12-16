@@ -81,12 +81,13 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       const singleValue = inputValue.split(',');
       const newSkills = await Promise.all(
         singleValue.map(async (value) => {
-          const rs = getSuggestions(value);
+          const newSuggestions = getSuggestions(value);
           const capitalizeValue =
             value.charAt(0).toUpperCase() + value.slice(1);
           const newSkill =
-            rs[0]?.name === value ? rs[0] : postSkills(capitalizeValue);
-          const whichValue = rs[0]?.name === value ? 'rs' : 'newSkill';
+            newSuggestions[0]?.name === value
+              ? newSuggestions[0]
+              : postSkills(capitalizeValue);
           return newSkill;
         }),
       );

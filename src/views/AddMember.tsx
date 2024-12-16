@@ -110,7 +110,12 @@ const AddMember = () => {
             styles="placeholder:text-[11px] xs:placeholder:text-base"
             placeholder="Add a tag and press enter"
             handleValue={(value: Skill) => {
-              setSkills((prev) => [...prev, value]);
+              setSkills((prevSkills) => {
+                if (!prevSkills.some((skill) => skill.id === value.id)) {
+                  return [...prevSkills, value];
+                }
+                return prevSkills;
+              });
             }}
           />
           <div className="flex gap-2 mt-2 flex-wrap">
