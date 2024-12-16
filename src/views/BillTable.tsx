@@ -1,3 +1,4 @@
+import GeneralContainer from '../components/UI/GeneralContainer';
 import type { Concept } from '../utils/types';
 import currency from 'currency.js';
 
@@ -37,6 +38,15 @@ const BillTable = () => {
     ],
   };
 
+  const SubTitle = () => {
+    return (
+      <span className="flex items-baseline">
+        <span className="text-gray-400 text-sm mr-4">Due date</span>
+        <h3 className="text-black">NOV 23, 2024</h3>
+      </span>
+    );
+  };
+
   const { from, to, concepts } = data;
   const sumTotal = concepts.reduce(
     (acc: number, concept: Concept) => acc + Number(concept.amount),
@@ -47,14 +57,7 @@ const BillTable = () => {
   const Total = currency(Number(sumTotal) + Number(vat)).format();
 
   return (
-    <div className="container mx-auto p-8 bg-white border border-gray-200 border-1 rounded-md">
-      <div className=" flex flex-wrap justify-center sm:justify-between pb-8 md:pb-20 gap-y-3 sm:gap-0 ">
-        <span className="text-black font-extrabold ">invoice # 124</span>
-        <span>
-          <label className="text-gray-400 text-xs">Due date: </label>
-          <span className="">23-Nov, 2024</span>
-        </span>
-      </div>
+    <GeneralContainer title="invoice # 124" subTitle={SubTitle}>
       <div className=" flex flex-wrap justify-center aling md:justify-between  divide-transparent gap-y-3 sm:gap-0">
         <div className="px-5 md:px-0 mb-4 md:mb-0">
           <label className="text-gray-400 text-xs block">from:</label>
@@ -158,7 +161,7 @@ const BillTable = () => {
           </tfoot>
         </table>
       </div>
-    </div>
+    </GeneralContainer>
   );
 };
 export default BillTable;
