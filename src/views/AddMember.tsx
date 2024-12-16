@@ -13,6 +13,11 @@ type Member = {
   email: string;
   hourlyRate: number;
 };
+interface Skill {
+  id: string;
+  name: string;
+  [x: string]: string;
+}
 const validationMenber = Yup.object({
   name: Yup.string().required('First Name is required'),
   lastname: Yup.string().required('Last Name is required'),
@@ -23,8 +28,9 @@ const validationMenber = Yup.object({
 });
 
 const AddMember = () => {
-  const [skills, setSkills] = useState<string[]>([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
   const [checked, setChecked] = useState(false);
+
   const AddPerson = async (member: Member) => {
     try {
       const { data } = await fetch.post('/developers', member);
@@ -103,18 +109,17 @@ const AddMember = () => {
           <AutocompleteInput
             styles="placeholder:text-[11px] xs:placeholder:text-base"
             placeholder="Add a tag and press enter"
-            handleValue={(newValue: string) => {
-              const value = newValue.split(/[, ]+/);
-              setSkills((oldValue) => [...oldValue, ...value]);
+            handleValue={(value: Skill) => {
+              setSkills((prev) => [...prev, value]);
             }}
           />
           <div className="flex gap-2 mt-2 flex-wrap">
             {skills.map((skill, index) => (
               <Tag
-                key={index + skill}
-                label={skill}
+                key={index}
+                label={skill?.name}
                 handleClose={() => {
-                  const value = skills.filter((item) => item !== skill);
+                  const value = skills.filter((item) => item.id !== skill.id);
                   setSkills((prev) => [...value]);
                 }}
               />

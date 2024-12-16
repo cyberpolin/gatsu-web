@@ -11,7 +11,7 @@ interface Skill {
 
 interface AutocompleteInput {
   placeholder: string;
-  handleValue: (value: string) => void;
+  handleValue: (value: Skill) => void;
   styles?: string;
   inputWidth?: string;
 }
@@ -23,17 +23,11 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
   handleValue,
 }) => {
   const [skills, setSkills] = useState<Skill[]>([]);
-  const [idSkill, setIdSkill] = useState<string[]>([]);
-  const [value, setValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<Skill[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [check, setcheck] = useState<boolean>(false);
   const [errorMessaje, setErrorMessaje] = useState<string>('');
-  const spaceCharactersValue = value.replace(
-    /[.*+?^=!:${}()|\[\]\/\\]/g,
-    '\\$&',
-  );
-  const regex = new RegExp('^' + spaceCharactersValue, 'i');
 
   const getSkills = async () => {
     try {
@@ -53,48 +47,57 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       console.error(error);
     }
   };
+  const getSuggestions = (itemToFind: string) => {
+    const spaceCharactersValue = itemToFind.replace(
+      /[.*+?^=!:${}()|\[\]\/\\]/g,
+      '\\$&',
+    );
+    const regex = new RegExp('^' + spaceCharactersValue, 'i');
+    const filteredSkills = skills.filter((skill: Skill) =>
+      regex.test(skill?.name),
+    );
+    setSuggestions(filteredSkills);
+    return filteredSkills;
+  };
 
   useEffect(() => {
     if (skills.length == 0) {
       getSkills();
     }
-    if (value) {
-      const filteredSkills = skills.filter(({ name }: { name: string }) =>
-        regex.test(name),
-      );
-      // const sugestion = filteredSkills[0]?.name;
-      setSuggestions(filteredSkills);
+    if (inputValue) {
+      getSuggestions(inputValue);
     } else {
       setSuggestions([]);
     }
-  }, [value]);
+  }, [inputValue]);
 
   const handleKey = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Tab') {
       event.preventDefault();
-      setValue(suggestions[0]?.name);
+      setInputValue(suggestions[0]?.name);
     }
     if (event.key === 'Enter') {
       handlevalidation();
-      const capitalizeValue = value.charAt(0).toUpperCase() + value.slice(1);
-      if (suggestions[0]?.name !== value) {
-        const newSkill = await postSkills(capitalizeValue);
-        console.log('newSkill', newSkill);
-        setIdSkill([...idSkill, newSkill.id]);
-      } else {
-        console.log('suggestions', suggestions[0]);
-        setIdSkill((prevIdSkills) => [...prevIdSkills, suggestions[0]?.id]);
-        console.log(' estoy en idSkill');
-      }
-      console.log('idSkill', idSkill);
-      handleValue(capitalizeValue);
-      setValue('');
+      const singleValue = inputValue.split(',');
+      const newSkills = await Promise.all(
+        singleValue.map(async (value) => {
+          const rs = getSuggestions(value);
+          const capitalizeValue =
+            value.charAt(0).toUpperCase() + value.slice(1);
+          const newSkill =
+            rs[0]?.name === value ? rs[0] : postSkills(capitalizeValue);
+          const whichValue = rs[0]?.name === value ? 'rs' : 'newSkill';
+          return newSkill;
+        }),
+      );
+      newSkills.forEach((skill) => handleValue(skill));
+      setInputValue('');
     }
   };
 
   const handlevalidation = () => {
     setcheck(false);
-    if (value.trim() === '') {
+    if (inputValue.trim() === '') {
       setError(true);
       setErrorMessaje('Empty file');
       return false;
@@ -119,9 +122,9 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
         } ${styles}`,
           )}
           type="text"
-          value={value}
+          value={inputValue}
           onChange={(e) => {
-            setValue(e.target.value);
+            setInputValue(e.target.value);
           }}
           onKeyDown={handleKey}
           placeholder={placeholder}
