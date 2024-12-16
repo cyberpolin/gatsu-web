@@ -3,6 +3,7 @@ import Tag from '../components/UI/Tag';
 import SubmitBTN from '../components/UI/SubmitBTN';
 import { useState } from 'react';
 import GeneralContainer from '../components/UI/GeneralContainer';
+import AutocompleteInput from '../components/UI/AutocompleteInput';
 const AddMember = () => {
   const [skills, setSkills] = useState<string[]>([]);
   return (
@@ -27,7 +28,7 @@ const AddMember = () => {
             add as many as you like, just be sure you are work ready on that
             skill.
           </p>
-          <BaseInput
+          <AutocompleteInput
             styles="placeholder:text-[11px] xs:placeholder:text-base"
             placeholder="Add a tag and press enter"
             handleValue={(newValue: string) => {
