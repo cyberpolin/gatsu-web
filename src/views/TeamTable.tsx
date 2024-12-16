@@ -1,36 +1,21 @@
 import Loading from '../components/UI/Loading';
+import fetch from '../utils/fetch';
+import { Member } from '../utils/types';
+import { useEffect, useState } from 'react';
 
 const TeamTable = () => {
-  const TEAM = [
-    {
-      id: 1,
-      name: 'John',
-      score: 5,
-      skills: ['Frontend Developer', 'React', 'Angular'],
-      hourRate: 25,
-    },
-    {
-      id: 2,
-      name: 'Jane',
-      score: 4,
-      skills: ['node'],
-      hourRate: 30,
-    },
-    {
-      id: 3,
-      name: 'Doe',
-      score: 3,
-      skills: ['Fullstack Developer', 'React', 'NodeJS'],
-      hourRate: 35,
-    },
-    {
-      id: 4,
-      name: 'Smith',
-      score: 2,
-      skills: ['Fullstack Developer', 'Angular', 'Express'],
-      hourRate: 40,
-    },
-  ];
+  const [member, setMember] = useState<Member[]>([]);
+  const getSkills = async () => {
+    try {
+      const { data } = await fetch.get('/developers');
+      setMember(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getSkills();
+  }, []);
   return (
     <div className="container mx-auto p-8 bg-white border border-gray-200 border-1 rounded-md">
       <div className=" flex flex-wrap sm:justify-between pb-8 md:pb-14 gap-y-3 sm:gap-0 ">
@@ -55,17 +40,17 @@ const TeamTable = () => {
             </tr>
           </thead>
           <tbody>
-            {TEAM.map(({ id, score, name, skills, hourRate }) => (
+            {member.map(({ id, name, skills, rate }) => (
               <tr key={id} className="even:bg-gray-100 odd:bg-white">
                 <td className="py-2 px-4 text-sm text-gray-700 text-right">
-                  {score}
+                  {234}
                 </td>
                 <td className="py-2 px-4 text-sm text-gray-700">{name}</td>
                 <td className="py-2 px-4 text-sm text-gray-700 truncate max-w-[150px] md:max-w-[10px]">
                   {skills}
                 </td>
                 <td className="py-2 px-4 text-sm text-gray-700 text-right">
-                  {hourRate}
+                  {rate}
                 </td>
               </tr>
             ))}

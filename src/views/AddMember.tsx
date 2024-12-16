@@ -6,25 +6,14 @@ import fetch from '../utils/fetch';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-
-type Member = {
-  name: string;
-  lastname: string;
-  email: string;
-  hourlyRate: number;
-};
-interface Skill {
-  id: string;
-  name: string;
-  [x: string]: string;
-}
+import { Skill, Member } from '../utils/types';
 const validationMenber = Yup.object({
   name: Yup.string().required('First Name is required'),
   lastname: Yup.string().required('Last Name is required'),
   email: Yup.string()
     .email('Invalid email address')
     .required('Email is required'),
-  hourlyRate: Yup.number().required('Hourly rate is required'),
+  rate: Yup.number().required('Hourly rate is required'),
 });
 
 const AddMember = () => {
@@ -44,14 +33,19 @@ const AddMember = () => {
       name: '',
       lastname: '',
       email: '',
-      hourlyRate: 0,
+      rate: 0,
+      skills: '',
+      id: '',
     },
     validationSchema: validationMenber,
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: (values, { resetForm }) => {
       setChecked(true);
-      AddPerson(values);
+      AddPerson({
+        ...values,
+        skills: skills.map((item) => item.id).join(', '),
+      });
       setTimeout(() => {
         resetForm();
         setChecked(false);
@@ -139,12 +133,12 @@ const AddMember = () => {
             write the amount previous agreed.
           </p>
           <BaseInput
-            value={formik.values.hourlyRate}
+            value={formik.values.rate}
             handleValue={formik.handleChange}
             onBlur={formik.handleBlur}
             placeholder="10"
-            name="hourlyRate"
-            errorMessage={formik.errors.hourlyRate}
+            name="rate"
+            errorMessage={formik.errors.rate}
             check={checked}
           />
         </div>

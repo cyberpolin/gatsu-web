@@ -20,13 +20,27 @@ export interface Contact {
 
 export interface Concept {
   qty: string;
-  concept: string;  
-  unitPrice: string; 
-  amount: string;    
+  concept: string;
+  unitPrice: string;
+  amount: string;
 }
 
 export interface InvoiceData {
-  from: Contact;      
-  to: Contact;        
-  concepts: Concept[]; 
+  from: Contact;
+  to: Contact;
+  concepts: Concept[];
+}
+
+export type Member = {
+  id: string;
+  name: string;
+  lastname: string;
+  email: string;
+  rate: number;
+  skills: string;
+};
+export interface Skill {
+  id: string;
+  name: string;
+  [x: string]: string;
 }

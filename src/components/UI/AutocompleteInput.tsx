@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Checkbox } from 'react-ionicons';
 import fetch from '../../utils/fetch';
-
-interface Skill {
-  id: string;
-  name: string;
-  [x: string]: string;
-}
+import { Skill } from '../../utils/types';
 
 interface AutocompleteInput {
   placeholder: string;
