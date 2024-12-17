@@ -142,7 +142,7 @@ const AddMember = () => {
             check={checked}
           />
         </div>
-        <div className="flex justify-center xs:justify-end   flex-wrap py-5 items-center gap-y-4 md:gap-y-0 gap-x-2">
+        <div className="flex justify-center xs:justify-end flex-wrap py-5 items-center gap-y-4 md:gap-y-0 gap-x-2">
           <SubmitBTN
             label="not now ..."
             handlesubmit={() => console.log('hola')}
