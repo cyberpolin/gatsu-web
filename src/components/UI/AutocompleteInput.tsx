@@ -2,16 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Checkbox } from 'react-ionicons';
 import fetch from '../../utils/fetch';
-
-interface Skill {
-  id: string;
-  name: string;
-  [x: string]: string;
-}
+import { Skill } from '../../utils/types';
 
 interface AutocompleteInput {
   placeholder: string;
-  handleValue: (value: string) => void;
+  handleValue: (value: Skill) => void;
   styles?: string;
   inputWidth?: string;
 }
@@ -23,16 +18,11 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
   handleValue,
 }) => {
   const [skills, setSkills] = useState<Skill[]>([]);
-  const [value, setValue] = useState<string>('');
-  const [suggestions, setSuggestions] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
+  const [suggestions, setSuggestions] = useState<Skill[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [check, setcheck] = useState<boolean>(false);
   const [errorMessaje, setErrorMessaje] = useState<string>('');
-  const spaceCharactersValue = value.replace(
-    /[.*+?^=!:${}()|\[\]\/\\]/g,
-    '\\$&',
-  );
-  const regex = new RegExp('^' + spaceCharactersValue, 'i');
 
   const getSkills = async () => {
     try {
@@ -52,39 +42,58 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       console.error(error);
     }
   };
+  const getSuggestions = (itemToFind: string) => {
+    const spaceCharactersValue = itemToFind.replace(
+      /[.*+?^=!:${}()|\[\]\/\\]/g,
+      '\\$&',
+    );
+    const regex = new RegExp('^' + spaceCharactersValue, 'i');
+    const filteredSkills = skills.filter((skill: Skill) =>
+      regex.test(skill?.name),
+    );
+    setSuggestions(filteredSkills);
+    return filteredSkills;
+  };
 
   useEffect(() => {
     if (skills.length == 0) {
       getSkills();
     }
-    if (value) {
-      const filteredSkills = skills.filter(({ name }: { name: string }) =>
-        regex.test(name),
-      );
-      const sugestion = filteredSkills[0]?.name;
-      setSuggestions(sugestion);
+    if (inputValue) {
+      getSuggestions(inputValue);
     } else {
-      setSuggestions('');
+      setSuggestions([]);
     }
-  }, [value]);
+  }, [inputValue]);
 
-  const handleKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKey = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Tab') {
       event.preventDefault();
-      setValue(suggestions);
+      setInputValue(suggestions[0]?.name);
     }
     if (event.key === 'Enter') {
       handlevalidation();
-      const capitalizeValue = value.charAt(0).toUpperCase() + value.slice(1);
-      handleValue(capitalizeValue);
-      postSkills(capitalizeValue);
-      setValue('');
+      const singleValue = inputValue.split(',');
+      const newSkills = await Promise.all(
+        singleValue.map(async (value) => {
+          const newSuggestions = getSuggestions(value);
+          const capitalizeValue =
+            value.charAt(0).toUpperCase() + value.slice(1);
+          const newSkill =
+            newSuggestions[0]?.name === value
+              ? newSuggestions[0]
+              : postSkills(capitalizeValue);
+          return newSkill;
+        }),
+      );
+      newSkills.forEach((skill) => handleValue(skill));
+      setInputValue('');
     }
   };
 
   const handlevalidation = () => {
     setcheck(false);
-    if (value.trim() === '') {
+    if (inputValue.trim() === '') {
       setError(true);
       setErrorMessaje('Empty file');
       return false;
@@ -109,16 +118,16 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
         } ${styles}`,
           )}
           type="text"
-          value={value}
+          value={inputValue}
           onChange={(e) => {
-            setValue(e.target.value);
+            setInputValue(e.target.value);
           }}
           onKeyDown={handleKey}
           placeholder={placeholder}
           onBlur={handlevalidation}
         />
         <div className=" capitalize p-2 h-[44px] rounded-md border-2 border-transparent w-full text-gray-400">
-          {suggestions}
+          {suggestions[0]?.name}
         </div>
         {check && (
           <Checkbox
