@@ -146,7 +146,7 @@ const AddMember = () => {
           <SubmitBTN
             label="not now ..."
             handlesubmit={() => console.log('hola')}
-            styles="bg-transparent text-black "
+            styles="bg-transparent text-black"
           />
           <SubmitBTN label="Add menber" handlesubmit={formik.handleSubmit} />
         </div>
