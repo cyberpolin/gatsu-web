@@ -1,6 +1,6 @@
 import Loading from '../components/UI/Loading';
 import fetch from '../utils/fetch';
-import { Member } from '../utils/types';
+import { Member, Skill } from '../utils/types';
 import { useEffect, useState } from 'react';
 
 const TeamTable = () => {
@@ -47,7 +47,7 @@ const TeamTable = () => {
                 </td>
                 <td className="py-2 px-4 text-sm text-gray-700">{name}</td>
                 <td className="py-2 px-4 text-sm text-gray-700 truncate max-w-[150px] md:max-w-[10px]">
-                  {skills}
+                  {skills.map((skill: any) => skill.name).join(', ')}
                 </td>
                 <td className="py-2 px-4 text-sm text-gray-700 text-right">
                   {rate}

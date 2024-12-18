@@ -32,12 +32,12 @@ export interface InvoiceData {
 }
 
 export type Member = {
-  id: string;
+  id?: string;
   name: string;
-  lastname: string;
+  lastName: string;
   email: string;
   rate: number;
-  skills: string;
+  skills: string[];
 };
 export interface Skill {
   id: string;
