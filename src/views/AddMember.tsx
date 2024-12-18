@@ -1,13 +1,61 @@
 import BaseInput from '../components/UI/BaseInput';
 import Tag from '../components/UI/Tag';
 import SubmitBTN from '../components/UI/SubmitBTN';
-import { useState } from 'react';
-import GeneralContainer from '../components/UI/GeneralContainer';
 import AutocompleteInput from '../components/UI/AutocompleteInput';
+import fetch from '../utils/fetch';
+import { useState } from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { Skill, Member } from '../utils/types';
+const validationMenber = Yup.object({
+  name: Yup.string().required('First Name is required'),
+  lastname: Yup.string().required('Last Name is required'),
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Email is required'),
+  rate: Yup.number().required('Hourly rate is required'),
+});
+
 const AddMember = () => {
-  const [skills, setSkills] = useState<string[]>([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
+  const [checked, setChecked] = useState(false);
+
+  const AddPerson = async (member: Member) => {
+    try {
+      const { data } = await fetch.post('/developers', member);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const formik = useFormik<Member>({
+    initialValues: {
+      name: '',
+      lastname: '',
+      email: '',
+      rate: 0,
+      skills: '',
+      id: '',
+    },
+    validationSchema: validationMenber,
+    validateOnChange: false,
+    validateOnBlur: false,
+    onSubmit: (values, { resetForm }) => {
+      setChecked(true);
+      AddPerson({
+        ...values,
+        skills: skills.map((item) => item.id).join(', '),
+      });
+      setTimeout(() => {
+        resetForm();
+        setChecked(false);
+      }, 500);
+    },
+  });
+
   return (
-    <GeneralContainer title="Add team member">
+    <div className="mx-auto px-8 bg-white border border-gray-100 rounded-md">
+      <h1 className="text-xl font-medium mt-5 mb-6">Add team member</h1>
       <div className="flex flex-col justify-between gap-y-20">
         <div>
           <span className="text-gray-800">Personal information</span>
@@ -16,9 +64,33 @@ const AddMember = () => {
             password and login to your dashboard.
           </p>
           <div className="flex flex-col h-60 justify-between">
-            <BaseInput handleValue={console.log} placeholder="Name" />
-            <BaseInput handleValue={console.log} placeholder="Lastname" />
-            <BaseInput handleValue={console.log} placeholder="email" />
+            <BaseInput
+              value={formik.values.name}
+              handleValue={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder="Name"
+              name="name"
+              errorMessage={formik.errors.name}
+              check={checked}
+            />
+            <BaseInput
+              value={formik.values.lastname}
+              handleValue={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder="Lastname"
+              name="lastname"
+              errorMessage={formik.errors.lastname}
+              check={checked}
+            />
+            <BaseInput
+              value={formik.values.email}
+              handleValue={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder="Email"
+              name="email"
+              errorMessage={formik.errors.email}
+              check={checked}
+            />
           </div>
         </div>
         <div>
@@ -31,18 +103,22 @@ const AddMember = () => {
           <AutocompleteInput
             styles="placeholder:text-[11px] xs:placeholder:text-base"
             placeholder="Add a tag and press enter"
-            handleValue={(newValue: string) => {
-              const value = newValue.split(/[, ]+/);
-              setSkills((oldValue) => [...oldValue, ...value]);
+            handleValue={(value: Skill) => {
+              setSkills((prevSkills) => {
+                if (!prevSkills.some((skill) => skill.id === value.id)) {
+                  return [...prevSkills, value];
+                }
+                return prevSkills;
+              });
             }}
           />
           <div className="flex gap-2 mt-2 flex-wrap">
             {skills.map((skill, index) => (
               <Tag
-                key={index + skill}
-                label={skill}
+                key={index}
+                label={skill?.name}
                 handleClose={() => {
-                  const value = skills.filter((item) => item !== skill);
+                  const value = skills.filter((item) => item.id !== skill.id);
                   setSkills((prev) => [...value]);
                 }}
               />
@@ -57,24 +133,25 @@ const AddMember = () => {
             write the amount previous agreed.
           </p>
           <BaseInput
-            handleValue={console.log}
-            inputWidth="w-12"
+            value={formik.values.rate}
+            handleValue={formik.handleChange}
+            onBlur={formik.handleBlur}
             placeholder="10"
+            name="rate"
+            errorMessage={formik.errors.rate}
+            check={checked}
           />
         </div>
-        <div className="flex justify-center xs:justify-end   flex-wrap py-5 items-center gap-y-4 md:gap-y-0 gap-x-2">
+        <div className="flex justify-center xs:justify-end flex-wrap py-5 items-center gap-y-4 md:gap-y-0 gap-x-2">
           <SubmitBTN
             label="not now ..."
             handlesubmit={() => console.log('hola')}
-            styles="bg-transparent text-black "
+            styles="bg-transparent text-black"
           />
-          <SubmitBTN
-            label="Add menber"
-            handlesubmit={() => console.log('hola')}
-          />
+          <SubmitBTN label="Add menber" handlesubmit={formik.handleSubmit} />
         </div>
       </div>
-    </GeneralContainer>
+    </div>
   );
 };
 

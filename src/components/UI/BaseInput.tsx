@@ -2,59 +2,44 @@ import React, { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Checkbox } from 'react-ionicons';
 interface InputProps {
+  name: string;
   placeholder: string;
-  handleValue: (value: string) => void;
+  handleValue: React.ChangeEventHandler<HTMLInputElement>;
   styles?: string;
   inputWidth?: string;
-  customValue?: string;
+  value: string | number;
+  onBlur?: React.ChangeEventHandler<HTMLInputElement>;
+  errorMessage?: string;
+  check?: boolean;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 const BaseInput: React.FC<InputProps> = ({
+  name,
   placeholder,
   styles = '',
   inputWidth = '',
   handleValue,
-  customValue,
+  value,
+  onBlur,
+  errorMessage,
+  check,
+  onKeyDown,
 }) => {
-  const [value, setValue] = useState<string>(customValue || '');
-  const [error, setError] = useState<boolean>(false);
-  const [check, setcheck] = useState<boolean>(false);
-  const [errorMessaje, setErrorMessaje] = useState<string>('');
-
-  const submitInfo = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      handlevalidation();
-      handleValue(value);
-      setValue('');
-    }
-  };
-  const handlevalidation = () => {
-    setcheck(false);
-    if (value.trim() === '') {
-      setError(true);
-      setErrorMessaje('Empty file');
-      return false;
-    } else {
-      setError(false);
-      setcheck(true);
-    }
-  };
-
   return (
     <div className={twMerge(`relative w-full fill-green-500 ${inputWidth}`)}>
       <input
         type="text"
+        name={name}
         placeholder={placeholder}
         value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
-        }}
-        onKeyDown={submitInfo}
-        onBlur={handlevalidation}
+        onKeyDown={onKeyDown}
+        onChange={handleValue}
+        onBlur={onBlur}
         className={twMerge(
           `border-2 p-2 rounded-md transition-colors duration-300 w-full
           ${
-            error
+            errorMessage
               ? 'border-red-500'
               : check
               ? 'border-green-500'
@@ -69,8 +54,8 @@ const BaseInput: React.FC<InputProps> = ({
           width="25px"
         />
       )}
-      {error && (
-        <p className="text-red-500 text-sm mt-1 ml-2">{errorMessaje}</p>
+      {errorMessage && (
+        <p className="text-red-500 text-sm mt-1 ml-2">{errorMessage}</p>
       )}
     </div>
   );

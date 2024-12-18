@@ -3,107 +3,149 @@ import { useState, useEffect } from 'react';
 import BaseInput from '../components/UI/BaseInput';
 import SubmitBTN from '../components/UI/SubmitBTN';
 import GeneralContainer from '../components/UI/GeneralContainer';
+import { Skill } from '../utils/types';
 
 const TagsManager = () => {
   const [skills, setSkills] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [currentSkill, setCurrentSkill] = useState({ id: '', name: '' });
-  async function getSkills() {
+  const [addSkill, setAddSkill] = useState('');
+  const [error, setError] = useState({ addSkill: '', editSkill: '' });
+  const getSkills = async () => {
     try {
       const { data } = await fetch.get('/skills');
       setSkills(data);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
   const deleteSkill = async (id: string) => {
     try {
       await fetch.delete(`/skills/${id}`);
-      getSkills();
+      resetEdit();
     } catch (error) {
       console.error(error);
     }
   };
   const updateSkill = async (id: string, name: string) => {
-    try {
-      await fetch.put(`/skills/${id}`, { name });
-      getSkills();
-    } catch (error) {
-      console.error(error);
+    if (currentSkill.name.trim() !== '') {
+      try {
+        const { data } = await fetch.patch(`/skills/${id}`, { name });
+        resetEdit();
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setError({
+        ...error,
+        editSkill: 'Empty field',
+      });
     }
   };
   const postSkills = async (name: string) => {
-    try {
-      const { data } = await fetch.post('/skills', { name });
-      getSkills();
-      return data;
-    } catch (error) {
-      console.error(error);
+    if (addSkill.trim() !== '') {
+      try {
+        const { data } = await fetch.post('/skills', { name });
+        resetEdit();
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setError({
+        ...error,
+        addSkill: 'Empty field',
+      });
     }
   };
-  const toogle = () => {
+  const changeAddSkill = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddSkill(e.target.value);
+    setError({
+      ...error,
+      addSkill: '',
+    });
+  };
+  const changeEditSkill = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentSkill({ ...currentSkill, name: e.target.value });
+    setError({
+      ...error,
+      editSkill: '',
+    });
+  };
+  const resetEdit = () => {
     setIsOpen(!isOpen);
+    getSkills();
+    setCurrentSkill({ id: '', name: '' });
+    setAddSkill('');
   };
   const openEdit = (id: string, name: string) => {
     setCurrentSkill((prev) => ({ id, name }));
-    toogle();
+    setIsOpen(!isOpen);
   };
   const secundaryBTN = (id: string) => {
-    isOpen ? toogle() : deleteSkill(id);
+    isOpen ? setIsOpen(!isOpen) : deleteSkill(id);
   };
-  const primaryBTN = (id: string, name: string) => {
-    openEdit(id, name);
+  const primaryBTN = (id: string, name: string, currentSkill: string) => {
+    isOpen ? updateSkill(id, currentSkill) : openEdit(id, name);
   };
 
   useEffect(() => {
     getSkills();
   }, []);
 
-  console.log(currentSkill);
-
   return (
     <GeneralContainer title="Manage your skills">
       <div className="max-w-[500px] m-auto divide-y-8 divide-transparent">
         <BaseInput
           placeholder="Add a new skill"
-          handleValue={(value) => postSkills(value)}
+          handleValue={changeAddSkill}
+          onKeyDown={(e) => e.key === 'Enter' && postSkills(addSkill)}
+          value={addSkill}
+          name="AddSkill"
+          errorMessage={error.addSkill}
         />
         <ul>
-          {skills.map((task: any) => (
+          {skills.map((tag: Skill) => (
             <li
-              className="border p-3 flex flex-wrap justify-center sm:justify-between items-center"
-              key={task.id}
+              className="border p-3 flex gap-y-5 flex-wrap justify-center sm:justify-between items-center"
+              key={tag.id}
             >
               <span
                 className={`${
-                  isOpen && task.id === currentSkill.id
+                  isOpen && tag.id === currentSkill.id
                     ? 'hidden'
                     : 'min-w-16 text-center sm:text-left'
                 }`}
               >
-                {task.name}
+                {tag.name}
               </span>
-              {isOpen && task.id === currentSkill.id && (
+              {isOpen && tag.id === currentSkill.id && (
                 <BaseInput
-                  handleValue={(value) => updateSkill(task.id, value)}
+                  handleValue={changeEditSkill}
                   placeholder="Edit your skill"
-                  customValue={task.name}
+                  value={currentSkill.name}
                   inputWidth="flex-1"
+                  name="EditSkill"
+                  errorMessage={error.editSkill}
                 />
               )}
               <div className="flex gap-2 flex-2">
                 <SubmitBTN
                   label={
-                    isOpen && task.id === currentSkill.id ? 'Cancel' : 'Delete'
+                    isOpen && tag.id === currentSkill.id
+                      ? 'Cancel'
+                      : 'Delete ...'
                   }
-                  handlesubmit={() => secundaryBTN(task.id)}
-                  styles="bg-transparent text-black "
+                  handlesubmit={() => secundaryBTN(tag.id)}
+                  styles="bg-transparent text-red-500 hover:text-red-400"
                 />
                 <SubmitBTN
-                  label={
-                    isOpen && task.id === currentSkill.id ? 'Save' : 'Edit'
+                  label={isOpen && tag.id === currentSkill.id ? 'Save' : 'Edit'}
+                  styles="hover:bg-green-400"
+                  handlesubmit={() =>
+                    primaryBTN(tag.id, tag.name, currentSkill.name)
                   }
-                  handlesubmit={() => primaryBTN(task.id, task.name)}
                 />
               </div>
             </li>
