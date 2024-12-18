@@ -11,6 +11,7 @@ const TagsManager = () => {
   const [currentSkill, setCurrentSkill] = useState({ id: '', name: '' });
   const [addSkill, setAddSkill] = useState('');
   const [error, setError] = useState({ addSkill: '', editSkill: '' });
+
   const getSkills = async () => {
     try {
       const { data } = await fetch.get('/skills');
@@ -79,12 +80,18 @@ const TagsManager = () => {
     setCurrentSkill({ id: '', name: '' });
     setAddSkill('');
   };
+  const comfirmDelete = (id: string) => {
+    const confirmed = window.confirm('Are you sure to delete this skill?');
+    if (confirmed) {
+      deleteSkill(id);
+    }
+  };
   const openEdit = (id: string, name: string) => {
     setCurrentSkill((prev) => ({ id, name }));
     setIsOpen(!isOpen);
   };
   const secundaryBTN = (id: string) => {
-    isOpen ? setIsOpen(!isOpen) : deleteSkill(id);
+    isOpen ? setIsOpen(!isOpen) : comfirmDelete(id);
   };
   const primaryBTN = (id: string, name: string, currentSkill: string) => {
     isOpen ? updateSkill(id, currentSkill) : openEdit(id, name);
