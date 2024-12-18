@@ -2,12 +2,12 @@ import BaseInput from '../components/UI/BaseInput';
 import Tag from '../components/UI/Tag';
 import SubmitBTN from '../components/UI/SubmitBTN';
 import { useState } from 'react';
+import GeneralContainer from '../components/UI/GeneralContainer';
 import AutocompleteInput from '../components/UI/AutocompleteInput';
 const AddMember = () => {
   const [skills, setSkills] = useState<string[]>([]);
   return (
-    <div className="mx-auto px-8 bg-white border border-gray-100 rounded-md">
-      <h1 className="text-xl font-medium mt-5 mb-6">Add team member</h1>
+    <GeneralContainer title="Add team member">
       <div className="flex flex-col justify-between gap-y-20">
         <div>
           <span className="text-gray-800">Personal information</span>
@@ -74,7 +74,7 @@ const AddMember = () => {
           />
         </div>
       </div>
-    </div>
+    </GeneralContainer>
   );
 };
 

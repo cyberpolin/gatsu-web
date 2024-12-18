@@ -241,7 +241,7 @@ const Sidebar = ({ menuOpen, toggleMenu }: MenuProps) => {
 };
 
 const Footer = () => {
-  return <div className="footer">Footer</div>;
+  return <div className="mt-6 sm:mt-14">Footer</div>;
 };
 
 type MainLayoutProps = {
@@ -259,7 +259,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         className={`flex mt-16 ${menuOpen ? 'ml-52' : 'ml-14'} transition-all`}
       >
         <Sidebar menuOpen={menuOpen} toggleMenu={toggleMenu} />
-        <div className="flex-grow w-full py-4 px-9">
+        <div className="flex-grow w-full">
           <Outlet />
         </div>
       </div>

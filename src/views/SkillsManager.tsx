@@ -1,8 +1,8 @@
-import { set } from 'react-datepicker/dist/date_utils';
 import fetch from '../utils/fetch';
 import { useState, useEffect } from 'react';
 import BaseInput from '../components/UI/BaseInput';
 import SubmitBTN from '../components/UI/SubmitBTN';
+import GeneralContainer from '../components/UI/GeneralContainer';
 
 const TagsManager = () => {
   const [skills, setSkills] = useState([]);
@@ -62,7 +62,7 @@ const TagsManager = () => {
   console.log(currentSkill);
 
   return (
-    <div>
+    <GeneralContainer title="Manage your skills">
       <div className="max-w-[500px] m-auto divide-y-8 divide-transparent">
         <BaseInput
           placeholder="Add a new skill"
@@ -110,7 +110,7 @@ const TagsManager = () => {
           ))}
         </ul>
       </div>
-    </div>
+    </GeneralContainer>
   );
 };
 
