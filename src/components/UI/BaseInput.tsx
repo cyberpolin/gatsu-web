@@ -6,6 +6,7 @@ interface InputProps {
   handleValue: (value: string) => void;
   styles?: string;
   inputWidth?: string;
+  customValue?: string;
 }
 
 const BaseInput: React.FC<InputProps> = ({
@@ -13,8 +14,9 @@ const BaseInput: React.FC<InputProps> = ({
   styles = '',
   inputWidth = '',
   handleValue,
+  customValue,
 }) => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(customValue || '');
   const [error, setError] = useState<boolean>(false);
   const [check, setcheck] = useState<boolean>(false);
   const [errorMessaje, setErrorMessaje] = useState<string>('');

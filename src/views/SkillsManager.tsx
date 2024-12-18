@@ -2,6 +2,7 @@ import { set } from 'react-datepicker/dist/date_utils';
 import fetch from '../utils/fetch';
 import { useState, useEffect } from 'react';
 import BaseInput from '../components/UI/BaseInput';
+import SubmitBTN from '../components/UI/SubmitBTN';
 
 const TagsManager = () => {
   const [skills, setSkills] = useState([]);
@@ -40,48 +41,28 @@ const TagsManager = () => {
       console.error(error);
     }
   };
-  const toogleModal = () => {
+  const toogle = () => {
     setIsOpen(!isOpen);
-    setCurrentSkill({ id: '', name: '' });
-    console.log('isOpen', isOpen);
   };
-  const openModal = (id: string) => {
-    setCurrentSkill({ id, name: '' });
-    toogleModal();
+  const openEdit = (id: string, name: string) => {
+    setCurrentSkill((prev) => ({ id, name }));
+    toogle();
   };
+  const secundaryBTN = (id: string) => {
+    isOpen ? toogle() : deleteSkill(id);
+  };
+  const primaryBTN = (id: string, name: string) => {
+    openEdit(id, name);
+  };
+
   useEffect(() => {
     getSkills();
   }, []);
+
+  console.log(currentSkill);
+
   return (
     <div>
-      <dialog
-        open={isOpen}
-        className="bg-transparent backdrop-blur-sm w-full h-full content-center"
-      >
-        <div className="mx-auto rounded-md p-4 bg-gray-200 flex flex-col justify-evenly h-60 w-80">
-          <span>Please type your change</span>
-          <BaseInput
-            handleValue={(value) =>
-              setCurrentSkill({ ...currentSkill, name: value })
-            }
-            placeholder="skill"
-          />
-          <div className="flex gap-2 w-full justify-end">
-            <button
-              className="p-2 bg-red-500 rounded-md min-w-20 hover:bg-red-400"
-              onClick={() => toogleModal()}
-            >
-              cancel
-            </button>
-            <button
-              className="p-2 bg-green-500 rounded-md min-w-20 hover:bg-green-400"
-              onClick={() => updateSkill(currentSkill.id, currentSkill.name)}
-            >
-              save
-            </button>
-          </div>
-        </div>
-      </dialog>
       <div className="max-w-[500px] m-auto divide-y-8 divide-transparent">
         <BaseInput
           placeholder="Add a new skill"
@@ -93,22 +74,37 @@ const TagsManager = () => {
               className="border p-3 flex flex-wrap justify-center sm:justify-between items-center"
               key={task.id}
             >
-              <span className="min-w-16 text-center sm:text-left">
+              <span
+                className={`${
+                  isOpen && task.id === currentSkill.id
+                    ? 'hidden'
+                    : 'min-w-16 text-center sm:text-left'
+                }`}
+              >
                 {task.name}
               </span>
-              <div className="flex gap-2">
-                <button
-                  className="p-2 bg-red-500 rounded-md min-w-20 hover:bg-red-400"
-                  onClick={() => deleteSkill(task.id)}
-                >
-                  Delete
-                </button>
-                <button
-                  className="p-2 bg-green-500 rounded-md min-w-20 hover:bg-green-400"
-                  onClick={() => openModal(task.id)}
-                >
-                  Edit
-                </button>
+              {isOpen && task.id === currentSkill.id && (
+                <BaseInput
+                  handleValue={(value) => updateSkill(task.id, value)}
+                  placeholder="Edit your skill"
+                  customValue={task.name}
+                  inputWidth="flex-1"
+                />
+              )}
+              <div className="flex gap-2 flex-2">
+                <SubmitBTN
+                  label={
+                    isOpen && task.id === currentSkill.id ? 'Cancel' : 'Delete'
+                  }
+                  handlesubmit={() => secundaryBTN(task.id)}
+                  styles="bg-transparent text-black "
+                />
+                <SubmitBTN
+                  label={
+                    isOpen && task.id === currentSkill.id ? 'Save' : 'Edit'
+                  }
+                  handlesubmit={() => primaryBTN(task.id, task.name)}
+                />
               </div>
             </li>
           ))}
