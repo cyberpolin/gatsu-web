@@ -101,7 +101,6 @@ const TagsManager = () => {
     if (e.key === 'Enter') {
       e.preventDefault();
       postSkills(addSkill);
-      console.log(addSkill);
     }
   };
 
