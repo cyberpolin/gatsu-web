@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import UseClients from '../../utils/hooks/UseClients';
-import { AddOutline } from 'react-ionicons';
+import { AddOutline, Mail } from 'react-ionicons';
 import useProjects from '../../utils/hooks/UseProjects';
 import Button from '../../components/UI/Button';
 import BaseInput from '../../components/UI/BaseInput';
@@ -53,10 +53,13 @@ function Clients() {
       <div className="border w-full rounded-md p-10 mt-6 bg-slate-50 ">
         <div className="border p-2">
           <div className=" grid grid-cols-3 gap-3">
-            <BaseInput placeholder="Clients name" handleValue={setName} />
+            <BaseInput
+              placeholder="Clients name"
+              handleValue={(e) => setName(e.target.value)}
+            />
             <BaseInput
               placeholder="Clients email"
-              handleValue={setEmail}
+              handleValue={(e) => setEmail(e.target.value)}
               inputType="email"
             />
 
@@ -106,7 +109,7 @@ function Clients() {
                   {/* single input form to get the project name */}
                   <BaseInput
                     placeholder="Project name"
-                    handleValue={setProjectName}
+                    handleValue={(e) => setProjectName(e.target.value)}
                   />
                   {/* enter ion icon */}
                   <AddOutline
