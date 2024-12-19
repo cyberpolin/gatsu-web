@@ -9,14 +9,14 @@ interface Skill {
   [x: string]: string;
 }
 
-interface AutocompleteInput {
+interface AutocompleteInputProp {
   placeholder: string;
   handleValue: (value: string) => void;
   styles?: string;
   inputWidth?: string;
 }
 
-const AutocompleteInput: React.FC<AutocompleteInput> = ({
+const AutocompleteInput: React.FC<AutocompleteInputProp> = ({
   placeholder,
   styles = '',
   inputWidth = '',
@@ -28,11 +28,6 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
   const [error, setError] = useState<boolean>(false);
   const [check, setcheck] = useState<boolean>(false);
   const [errorMessaje, setErrorMessaje] = useState<string>('');
-  const spaceCharactersValue = value.replace(
-    /[.*+?^=!:${}()|\[\]\/\\]/g,
-    '\\$&',
-  );
-  const regex = new RegExp('^' + spaceCharactersValue, 'i');
 
   const getSkills = async () => {
     try {
@@ -54,7 +49,11 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
   };
 
   useEffect(() => {
-    if (skills.length == 0) {
+    const fromReg = new RegExp(/[.*+?^=!:${}()|\[\]\/\\]/g);
+    const toReg = '\\$&';
+    const spaceCharactersValue = value.replace(fromReg, toReg);
+    const regex = new RegExp('^' + spaceCharactersValue, 'i');
+    if (skills.length === 0) {
       getSkills();
     }
     if (value) {
@@ -66,7 +65,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
     } else {
       setSuggestions('');
     }
-  }, [value]);
+  }, [value, skills]);
 
   const handleKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Tab') {

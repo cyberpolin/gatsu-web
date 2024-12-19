@@ -5,7 +5,6 @@ import BaseInput from '../components/UI/BaseInput';
 
 const Recovey = () => {
   //TODO: fix after implementation
-
   const [loading, setLoading] = useState(false);
 
   return (

@@ -2,7 +2,7 @@ export type UserType = {
   email: string;
   password: string;
   username?: string;
-  token?: string;
+  access_token?: string;
   token_type?: string;
 };
 

@@ -1,27 +1,29 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
 import { useEffect, useState } from 'react';
 import useAuth from '../utils/hooks/UseAuth';
 import BaseInput from '../components/UI/BaseInput';
 
+const emailValue = process.env.REACT_APP_EMAIL;
+const passwordValue = process.env.REACT_APP_PASSWORD;
+
 const Login = () => {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(emailValue || '');
+  const [password, setPassword] = useState(passwordValue || '');
   const { hasFirstUser, login, user, loading, error } = useAuth();
 
   const { search } = useLocation();
 
   const navigate = useNavigate();
 
-  const redirect = new URLSearchParams(search).get('redirect');
+  const redirect = new URLSearchParams(search).get('redirect') || '/';
 
   useEffect(() => {
     if (user?.loaded && user?.user && redirect) {
       navigate(redirect);
     }
-  }, [user, redirect, navigate]);
+  }, [user, navigate, redirect]);
 
   const title = !hasFirstUser ? 'Log In' : 'Create your first user';
   const subTitle = !hasFirstUser
@@ -52,6 +54,7 @@ const Login = () => {
           <p>
             {error && <span className="text-red-500 text-sm">{error}</span>}
           </p>
+
           <Button
             className={'my-4'}
             loading={loading}

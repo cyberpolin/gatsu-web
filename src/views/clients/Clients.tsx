@@ -1,4 +1,3 @@
-import Input from '../../components/UI/Input';
 import { useState } from 'react';
 import UseClients from '../../utils/hooks/UseClients';
 import { AddOutline } from 'react-ionicons';
