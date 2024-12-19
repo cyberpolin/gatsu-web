@@ -97,6 +97,14 @@ const TagsManager = () => {
     isOpen ? updateSkill(id, currentSkill) : openEdit(id, name);
   };
 
+  const pressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      postSkills(addSkill);
+      console.log(addSkill);
+    }
+  };
+
   useEffect(() => {
     getSkills();
   }, []);
@@ -107,7 +115,7 @@ const TagsManager = () => {
         <BaseInput
           placeholder="Add a new skill"
           handleValue={changeAddSkill}
-          onKeyDown={(e) => e.key === 'Enter' && postSkills(addSkill)}
+          keyDown={pressEnter}
           value={addSkill}
           name="AddSkill"
           errorMessage={error.addSkill}

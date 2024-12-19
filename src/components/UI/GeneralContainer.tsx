@@ -1,11 +1,11 @@
 import React from 'react';
 
-type GeneralContainer = {
+type GeneralContainerProps = {
   title?: string | (() => JSX.Element);
   subTitle?: string | (() => JSX.Element);
   children: React.ReactNode;
 };
-const GeneralContainer: React.FC<GeneralContainer> = ({
+const GeneralContainer: React.FC<GeneralContainerProps> = ({
   title,
   subTitle,
   children,

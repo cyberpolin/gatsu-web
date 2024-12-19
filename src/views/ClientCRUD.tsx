@@ -1,9 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
 import '../App.css';
-import Input from '../components/UI/Input';
 import { useState } from 'react';
 import * as yup from 'yup';
 import useClients from '../UseClients';
+import BaseInput from '../components/UI/BaseInput';
 
 function ClientCrud() {
   const navigate = useNavigate();
@@ -60,20 +60,24 @@ function ClientCrud() {
       <h1 className="text-4xl font-bold text-center mt-4 mb-6">
         Alta de cliente
       </h1>
-      <Input
-        name="name"
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-        autoFocus
+      <BaseInput
+        placeholder="name"
+        handleValue={(e) => setName(e.target.value)}
+        isautoFocus
       />
-      <Input name="phone" onChange={(e) => setPhone(e.target.value)} />
-      <Input name="email" onChange={(e) => setEmail(e.target.value)} />
-      <Input
-        name="notes"
-        onChange={(e) => {
-          setNotes(e.target.value);
-        }}
+      <BaseInput
+        inputType="tel"
+        placeholder="phone"
+        handleValue={(e) => setPhone(e.target.value)}
+      />
+      <BaseInput
+        inputType="mail"
+        placeholder="email"
+        handleValue={(e) => setEmail(e.target.value)}
+      />
+      <BaseInput
+        placeholder="notes"
+        handleValue={(e) => setNotes(e.target.value)}
         multiline
       />
       {error && <p className="text-red-500">{error}</p>}

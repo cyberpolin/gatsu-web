@@ -2,16 +2,21 @@ import React, { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Checkbox } from 'react-ionicons';
 interface InputProps {
-  name: string;
+  name?: string;
   placeholder: string;
-  handleValue: React.ChangeEventHandler<HTMLInputElement>;
+  handleValue?: React.ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  >;
+  keyDown?: React.KeyboardEventHandler<HTMLInputElement>;
   styles?: string;
   inputWidth?: string;
-  value: string | number;
-  onBlur?: React.ChangeEventHandler<HTMLInputElement>;
+  value?: string | number;
+  onBlur?: React.ChangeEventHandler;
   errorMessage?: string;
   check?: boolean;
-  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
+  inputType?: string;
+  multiline?: boolean;
+  isautoFocus?: boolean;
 }
 
 const BaseInput: React.FC<InputProps> = ({
@@ -20,24 +25,26 @@ const BaseInput: React.FC<InputProps> = ({
   styles = '',
   inputWidth = '',
   handleValue,
+  keyDown,
   value,
   onBlur,
   errorMessage,
   check,
-  onKeyDown,
+  inputType = 'text',
+  multiline = false,
+  isautoFocus = false,
 }) => {
   return (
     <div className={twMerge(`relative w-full fill-green-500 ${inputWidth}`)}>
-      <input
-        type="text"
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        onKeyDown={onKeyDown}
-        onChange={handleValue}
-        onBlur={onBlur}
-        className={twMerge(
-          `border-2 p-2 rounded-md transition-colors duration-300 w-full
+      {multiline ? (
+        <textarea
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={handleValue}
+          onBlur={onBlur}
+          className={twMerge(
+            `border-2 p-2 rounded-md transition-colors duration-300 w-full
           ${
             errorMessage
               ? 'border-red-500'
@@ -45,8 +52,30 @@ const BaseInput: React.FC<InputProps> = ({
               ? 'border-green-500'
               : 'border-gray-300'
           } ${styles}`,
-        )}
-      />
+          )}
+        ></textarea>
+      ) : (
+        <input
+          name={name}
+          autoFocus={isautoFocus}
+          type={inputType}
+          placeholder={placeholder}
+          value={value}
+          onKeyDown={keyDown}
+          onChange={handleValue}
+          onBlur={onBlur}
+          className={twMerge(
+            `border-2 p-2 rounded-md transition-colors duration-300 w-full
+          ${
+            errorMessage
+              ? 'border-red-500'
+              : check
+              ? 'border-green-500'
+              : 'border-gray-300'
+          } ${styles}`,
+          )}
+        />
+      )}
       {check && (
         <Checkbox
           cssClasses={'absolute top-[8px] right-2 !fill-green-500'}

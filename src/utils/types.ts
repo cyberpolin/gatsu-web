@@ -2,7 +2,7 @@ export type UserType = {
   email: string;
   password: string;
   username?: string;
-  token?: string;
+  access_token?: string;
   token_type?: string;
 };
 
@@ -31,14 +31,24 @@ export interface InvoiceData {
   concepts: Concept[];
 }
 
-export type Member = {
-  id: string;
+export type GetMember = {
+  id?: string;
   name: string;
-  lastname: string;
+  lastName: string;
   email: string;
   rate: number;
-  skills: string;
+  skills: Skill[];
 };
+
+export type AddMember = {
+  id?: string;
+  name: string;
+  lastName: string;
+  email: string;
+  rate: number;
+  skills: string[];
+};
+
 export interface Skill {
   id: string;
   name: string;

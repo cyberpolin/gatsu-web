@@ -1,13 +1,13 @@
 import { CloseCircleOutline, CloseCircle } from 'react-ionicons';
 import { twMerge } from 'tailwind-merge';
 
-interface Tag {
+interface TagProps {
   label: string;
   styles?: string;
   handleClose: () => void;
 }
 
-const Tag: React.FC<Tag> = ({ label, styles = '', handleClose }) => {
+const Tag: React.FC<TagProps> = ({ label, styles = '', handleClose }) => {
   return (
     <span
       className={twMerge(

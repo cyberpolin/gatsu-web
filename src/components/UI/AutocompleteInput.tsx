@@ -42,6 +42,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       console.error(error);
     }
   };
+
   const getSuggestions = (itemToFind: string) => {
     const spaceCharactersValue = itemToFind.replace(
       /[.*+?^=!:${}()|\[\]\/\\]/g,

@@ -1,15 +1,16 @@
 import BaseInput from '../components/UI/BaseInput';
 import Tag from '../components/UI/Tag';
 import SubmitBTN from '../components/UI/SubmitBTN';
+import GeneralContainer from '../components/UI/GeneralContainer';
 import AutocompleteInput from '../components/UI/AutocompleteInput';
 import fetch from '../utils/fetch';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { Skill, Member } from '../utils/types';
+import { Skill, AddMember as Member } from '../utils/types';
 const validationMenber = Yup.object({
   name: Yup.string().required('First Name is required'),
-  lastname: Yup.string().required('Last Name is required'),
+  lastName: Yup.string().required('Last Name is required'),
   email: Yup.string()
     .email('Invalid email address')
     .required('Email is required'),
@@ -30,12 +31,11 @@ const AddMember = () => {
   };
   const formik = useFormik<Member>({
     initialValues: {
-      name: '',
-      lastname: '',
       email: '',
+      name: '',
+      lastName: '',
+      skills: [''],
       rate: 0,
-      skills: '',
-      id: '',
     },
     validationSchema: validationMenber,
     validateOnChange: false,
@@ -44,7 +44,7 @@ const AddMember = () => {
       setChecked(true);
       AddPerson({
         ...values,
-        skills: skills.map((item) => item.id).join(', '),
+        skills: skills.map((skill) => skill.id),
       });
       setTimeout(() => {
         resetForm();
@@ -74,12 +74,12 @@ const AddMember = () => {
               check={checked}
             />
             <BaseInput
-              value={formik.values.lastname}
+              value={formik.values.lastName}
               handleValue={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Lastname"
-              name="lastname"
-              errorMessage={formik.errors.lastname}
+              // onBlur={formik.handleBlur}
+              placeholder="lastName"
+              name="lastName"
+              errorMessage={formik.errors.lastName}
               check={checked}
             />
             <BaseInput

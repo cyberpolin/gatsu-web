@@ -1,26 +1,29 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
 import { useEffect, useState } from 'react';
 import useAuth from '../utils/hooks/UseAuth';
+import BaseInput from '../components/UI/BaseInput';
+
+const emailValue = process.env.REACT_APP_EMAIL;
+const passwordValue = process.env.REACT_APP_PASSWORD;
 
 const Login = () => {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(emailValue || '');
+  const [password, setPassword] = useState(passwordValue || '');
   const { hasFirstUser, login, user, loading, error } = useAuth();
 
   const { search } = useLocation();
 
   const navigate = useNavigate();
 
-  const redirect = new URLSearchParams(search).get('redirect');
+  const redirect = new URLSearchParams(search).get('redirect') || '/';
 
   useEffect(() => {
     if (user?.loaded && user?.user && redirect) {
       navigate(redirect);
     }
-  }, [user, redirect, navigate]);
+  }, [user, navigate, redirect]);
 
   const title = !hasFirstUser ? 'Log In' : 'Create your first user';
   const subTitle = !hasFirstUser
@@ -41,26 +44,26 @@ const Login = () => {
         <h2 className="font-semibold mb-2 text-slate-900">{title}</h2>
         <p className="mb-8 text-slate-600 text-sm ">{subTitle}</p>
         <form>
-          {showUserName && (
-            <Input
-              className="mr-2"
-              name="Username"
-              onChange={(e) => setUsername(e.target.value)}
+          <div className="text-left divide-y-[15px] divide-transparent">
+            {showUserName && (
+              <BaseInput
+                placeholder="Username"
+                handleValue={(e) => setUsername(e.target.value)}
+              />
+            )}
+            <BaseInput
+              placeholder="Email"
+              handleValue={(e) => setEmail(e.target.value)}
             />
-          )}
-          <Input
-            className="mr-2"
-            name="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            className="mr-2"
-            name="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <BaseInput
+              placeholder="Password"
+              handleValue={(e) => setPassword(e.target.value)}
+            />
+          </div>
           <p>
             {error && <span className="text-red-500 text-sm">{error}</span>}
           </p>
+
           <Button
             className={'my-4'}
             loading={loading}
