@@ -3,6 +3,8 @@ import BaseInput from '../components/UI/BaseInput';
 import SubmitBTN from '../components/UI/SubmitBTN';
 import fetch from '../utils/fetch';
 import { useEffect, useState } from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 
 type Client = {
   id: string;
@@ -10,6 +12,11 @@ type Client = {
   email: string;
   isDeleted?: boolean;
 };
+const validation = Yup.object().shape({
+  name: Yup.string().required(),
+  email: Yup.string().required().email(),
+});
+
 const ClientTable = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +25,23 @@ const ClientTable = () => {
     email: '',
     id: '',
   });
-  const [error, setError] = useState({ email: '', name: '' });
+  const [checked, setChecked] = useState(false);
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: currentClient,
+    validationSchema: validation,
+    validateOnChange: false,
+    validateOnBlur: false,
+    onSubmit: (values, { resetForm }) => {
+      setChecked(true);
+      updateClient(currentClient.id, values.name, values.email);
+      setTimeout(() => {
+        resetForm();
+        setChecked(false);
+      }, 500);
+    },
+  });
   const getClients = async () => {
     try {
       const { data } = await fetch.get('/clients');
@@ -36,20 +59,13 @@ const ClientTable = () => {
       console.error(error);
     }
   };
-  const updateClient = async (client: Client) => {
-    if (currentClient.name.trim() !== '' || currentClient.email.trim() !== '') {
-      const { name, email, id } = currentClient;
-      try {
-        await fetch.put(`/clients/${id}`, { name, email });
-        getClients();
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      setError({
-        email: 'Email is required',
-        name: 'Name is required',
-      });
+  const updateClient = async (id: string, name: string, email: string) => {
+    try {
+      await fetch.patch(`/clients/${id}`, { name, email });
+      console.log('updated', name, email);
+      getClients();
+    } catch (error) {
+      console.error(error);
     }
   };
   const comfirmDelete = (id: string) => {
@@ -60,35 +76,29 @@ const ClientTable = () => {
   };
   const openEdit = (id: string, name: string, email: string) => {
     setIsOpen(!isOpen);
-    setCurrentClient({ name, email: '', id });
+    setCurrentClient({ name, email, id });
   };
   const secundaryBTN = (id: string) => {
     isOpen ? setIsOpen(!isOpen) : comfirmDelete(id);
   };
   const primaryBTN = (id: string, name: string, email: string) => {
-    isOpen ? updateClient(currentClient) : openEdit(id, name, email);
+    isOpen ? formik.handleSubmit() : openEdit(id, name, email);
   };
-  const changeEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentClient({ ...currentClient, name: e.target.value });
-    setError({
-      ...error,
-      name: '',
-    });
-  };
+
   useEffect(() => {
     getClients();
   }, []);
-  console.log('clients', clients);
+  console.log('clients', currentClient);
   return (
-    <GeneralContainer title="Team">
+    <GeneralContainer title="Clients">
       <div className="overflow-x-scroll">
         <table className="min-w-full table-fixed">
           <thead>
             <tr className="border-b-2 border-gray-300">
-              <th className="py-2 px-4 text-left text-sm font-medium text-gray-600 w-14">
+              <th className="py-2 px-4 text-left text-sm font-medium text-gray-600 ">
                 Name
               </th>
-              <th className="py-2 px-4 text-left text-sm font-medium text-gray-600 min-w-40">
+              <th className="py-2 px-4 text-left text-sm font-medium text-gray-600 ">
                 Email
               </th>
             </tr>
@@ -96,8 +106,7 @@ const ClientTable = () => {
           <tbody>
             {clients.map(({ id, name, email, isDeleted }) => (
               <tr key={id} className="even:bg-gray-100 odd:bg-white">
-                <td className="py-2 px-4 text-sm text-gray-700">{name}</td>
-                <td className="py-2 px-4 text-sm text-gray-700 truncate max-w-[150px] md:max-w-[10px]">
+                <td className="py-2 px-4 text-sm text-gray-700">
                   <span
                     className={`${
                       isOpen && id === currentClient.id
@@ -109,12 +118,37 @@ const ClientTable = () => {
                   </span>
                   {isOpen && id === currentClient.id && (
                     <BaseInput
-                      handleValue={console.log}
-                      placeholder="Edit your name"
-                      defaultValue=""
+                      handleValue={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      placeholder="Edit name"
+                      value={formik.values.name}
                       inputWidth="flex-1"
-                      // name="EditName"
-                      // errorMessage={error.name}
+                      name="name"
+                      errorMessage={formik.errors.name}
+                      check={checked}
+                    />
+                  )}
+                </td>
+                <td className="py-2 px-4 text-sm text-gray-700 truncate">
+                  <span
+                    className={`${
+                      isOpen && id === currentClient.id
+                        ? 'hidden'
+                        : 'min-w-16 text-center sm:text-left'
+                    }`}
+                  >
+                    {email}
+                  </span>
+                  {isOpen && id === currentClient.id && (
+                    <BaseInput
+                      handleValue={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      placeholder="Edit email"
+                      value={formik.values.email}
+                      inputWidth="flex-1"
+                      name="email"
+                      errorMessage={formik.errors.email}
+                      check={checked}
                     />
                   )}
                 </td>
@@ -146,4 +180,5 @@ const ClientTable = () => {
     </GeneralContainer>
   );
 };
+
 export default ClientTable;
