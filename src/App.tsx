@@ -1,9 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './App.css';
-import Input from './components/UI/Input';
 import useClients, { ClientType } from './UseClients';
 import { useState } from 'react';
 import { useFilter } from './UseFilter';
+import BaseInput from './components/UI/BaseInput';
 
 function App() {
   const [search, setSearch] = useState('');
@@ -44,7 +44,10 @@ function App() {
         <Link to="/clients/new">New Client</Link>
       </div>
 
-      <Input name="Buscar" onChange={(e) => setSearch(e.target.value)} />
+      <BaseInput
+        placeholder="Buscar"
+        handleValue={(e) => setSearch(e.target.value)}
+      />
       {/* propose a list of clients usinf clientData json should look like mobile */}
       <div className="w-full overflow-scroll">
         {listData.map((client: ClientType, index: number) => (

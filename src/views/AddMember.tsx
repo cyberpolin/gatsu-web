@@ -66,7 +66,7 @@ const AddMember = () => {
             <BaseInput
               value={formik.values.name}
               handleValue={formik.handleChange}
-              onBlur={formik.handleBlur}
+              // onBlur={formik.handleBlur}
               placeholder="Name"
               name="name"
               errorMessage={formik.errors.name}
@@ -75,7 +75,7 @@ const AddMember = () => {
             <BaseInput
               value={formik.values.lastName}
               handleValue={formik.handleChange}
-              onBlur={formik.handleBlur}
+              // onBlur={formik.handleBlur}
               placeholder="lastName"
               name="lastName"
               errorMessage={formik.errors.lastName}
@@ -84,7 +84,7 @@ const AddMember = () => {
             <BaseInput
               value={formik.values.email}
               handleValue={formik.handleChange}
-              onBlur={formik.handleBlur}
+              // onBlur={formik.handleBlur}
               placeholder="Email"
               name="email"
               errorMessage={formik.errors.email}
@@ -134,7 +134,7 @@ const AddMember = () => {
           <BaseInput
             value={formik.values.rate}
             handleValue={formik.handleChange}
-            onBlur={formik.handleBlur}
+            // onBlur={formik.handleBlur}
             placeholder="10"
             name="rate"
             errorMessage={formik.errors.rate}

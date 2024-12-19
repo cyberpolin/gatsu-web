@@ -1,8 +1,7 @@
-import GeneralContainer from '../components/UI/GeneralContainer';
-import Loading from '../components/UI/Loading';
 import fetch from '../utils/fetch';
 import { useEffect, useState } from 'react';
 import { GetMember } from '../utils/types';
+import GeneralContainer from '../components/UI/GeneralContainer';
 
 const TeamTable = () => {
   const [member, setMember] = useState<GetMember[]>([]);

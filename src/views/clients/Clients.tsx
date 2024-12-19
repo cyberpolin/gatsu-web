@@ -1,9 +1,9 @@
-import Input from '../../components/UI/Input';
 import { useState } from 'react';
 import UseClients from '../../utils/hooks/UseClients';
-import { AddOutline } from 'react-ionicons';
+import { AddOutline, Mail } from 'react-ionicons';
 import useProjects from '../../utils/hooks/UseProjects';
 import Button from '../../components/UI/Button';
+import BaseInput from '../../components/UI/BaseInput';
 
 function Clients() {
   const { clients, addClient } = UseClients();
@@ -53,15 +53,14 @@ function Clients() {
       <div className="border w-full rounded-md p-10 mt-6 bg-slate-50 ">
         <div className="border p-2">
           <div className=" grid grid-cols-3 gap-3">
-            <Input
-              name="Clients name"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+            <BaseInput
+              placeholder="Clients name"
+              handleValue={(e) => setName(e.target.value)}
             />
-            <Input
-              name="Clients email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+            <BaseInput
+              placeholder="Clients email"
+              handleValue={(e) => setEmail(e.target.value)}
+              inputType="email"
             />
 
             <Button
@@ -108,11 +107,9 @@ function Clients() {
                   <h3 className="text-slate-300 text-sm bt-4 ">Add projects</h3>
 
                   {/* single input form to get the project name */}
-                  <Input
-                    name="Project name"
-                    onChange={(e) => {
-                      setProjectName(e.target.value);
-                    }}
+                  <BaseInput
+                    placeholder="Project name"
+                    handleValue={(e) => setProjectName(e.target.value)}
                   />
                   {/* enter ion icon */}
                   <AddOutline
