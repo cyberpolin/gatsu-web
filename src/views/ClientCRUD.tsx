@@ -60,10 +60,26 @@ function ClientCrud() {
       <h1 className="text-4xl font-bold text-center mt-4 mb-6">
         Alta de cliente
       </h1>
-      <BaseInput placeholder="name" handleValue={setName} isautoFocus />
-      <BaseInput inputType="tel" placeholder="phone" handleValue={setPhone} />
-      <BaseInput inputType="mail" placeholder="email" handleValue={setEmail} />
-      <BaseInput placeholder="notes" handleValue={setNotes} multiline />
+      <BaseInput
+        placeholder="name"
+        handleValue={(e) => setName(e.target.value)}
+        isautoFocus
+      />
+      <BaseInput
+        inputType="tel"
+        placeholder="phone"
+        handleValue={(e) => setPhone(e.target.value)}
+      />
+      <BaseInput
+        inputType="mail"
+        placeholder="email"
+        handleValue={(e) => setEmail(e.target.value)}
+      />
+      <BaseInput
+        placeholder="notes"
+        handleValue={(e) => setNotes(e.target.value)}
+        multiline
+      />
       {error && <p className="text-red-500">{error}</p>}
 
       {exists && (
