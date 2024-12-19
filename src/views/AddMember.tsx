@@ -2,8 +2,9 @@ import BaseInput from '../components/UI/BaseInput';
 import Tag from '../components/UI/Tag';
 import SubmitBTN from '../components/UI/SubmitBTN';
 import { useState } from 'react';
-import AutocompleteInput from '../components/UI/AutocompleteInput';
 import GeneralContainer from '../components/UI/GeneralContainer';
+import AutocompleteInput from '../components/UI/AutocompleteInput';
+
 const AddMember = () => {
   const [skills, setSkills] = useState<string[]>([]);
   return (
