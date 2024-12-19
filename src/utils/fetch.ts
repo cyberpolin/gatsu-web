@@ -6,7 +6,7 @@ const fetch = axios.create({
   baseURL: API_URL,
   headers: {
     client_id: 'gatsu-web',
-    Authorization: token,
+    Authorization: `Bearer ${token}`,
   },
 });
 

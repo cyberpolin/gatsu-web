@@ -8,6 +8,8 @@ const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  console.log('D user', user);
+
   useEffect(() => {
     const firstUser = localStorage.getItem('firstUser');
     if (firstUser) {
@@ -19,13 +21,24 @@ const useAuth = () => {
   }, []);
 
   const createUser = (user: UserType) => {
+    console.log('creating user', user);
     try {
-      localStorage.setItem('gatsu-user', JSON.stringify(user));
-      setUser({
-        loaded: true,
-        user,
-      });
+      if (user.access_token) {
+        console.log('before local storage');
+        localStorage.setItem('gatsu-user', JSON.stringify(user));
+        console.log('AFTER local storage');
+        console.log('before set user');
+        setUser({
+          loaded: true,
+          user,
+        });
+        console.log('after set user');
+        console.log('before fetch header');
+        fetch.defaults.headers.common['Authorization'] = user.access_token;
+        console.log('after fetch header');
+      }
     } catch (error) {
+      console.log('error creating user', error);
       return error;
     }
   };
@@ -51,16 +64,24 @@ const useAuth = () => {
   };
 
   const login = async ({ email, password, username }: UserType) => {
+    setLoading(true);
+    console.log('this is login');
     if (!hasFirstUser && username) {
+      console.log('has first user');
       await register({ email, password, username });
+      setLoading(false);
     } else {
+      console.log('regular login');
       try {
+        console.log('trying to login');
         const { data } = await fetch.post('/login', { email, password });
         console.log('data', data);
         createUser(data);
+        console.log('after create user');
+        setLoading(false);
       } catch (error) {
+        console.error('>>>', error);
         setError('Invalid credentials');
-        console.error(error);
       }
     }
   };

@@ -22,11 +22,12 @@ const ProtectedRoute = (props: any) => {
   const { pathname, search } = useLocation();
 
   const redirectPathWithQuery = `${redirectPath}?redirect=${pathname}${search}`;
-
+  console.log('redirectPathWithQuery', redirectPathWithQuery);
   useEffect(() => {
+    console.log('user root', user);
     if (user?.loaded && !user?.user) {
       // TODO redirect to login
-      // window.location.href = redirectPathWithQuery;
+      window.location.href = redirectPathWithQuery;
     }
   }, [user, redirectPathWithQuery]);
 

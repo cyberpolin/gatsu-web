@@ -1,6 +1,7 @@
 import BaseInput from '../components/UI/BaseInput';
 import Tag from '../components/UI/Tag';
 import SubmitBTN from '../components/UI/SubmitBTN';
+import GeneralContainer from '../components/UI/GeneralContainer';
 import AutocompleteInput from '../components/UI/AutocompleteInput';
 import fetch from '../utils/fetch';
 import { useState } from 'react';
@@ -53,8 +54,7 @@ const AddMember = () => {
   });
 
   return (
-    <div className="mx-auto px-8 bg-white border border-gray-100 rounded-md">
-      <h1 className="text-xl font-medium mt-5 mb-6">Add team member</h1>
+    <GeneralContainer title="Add team member">
       <div className="flex flex-col justify-between gap-y-20">
         <div>
           <span className="text-gray-800">Personal information</span>
@@ -66,7 +66,7 @@ const AddMember = () => {
             <BaseInput
               value={formik.values.name}
               handleValue={formik.handleChange}
-              onBlur={formik.handleBlur}
+              // onBlur={formik.handleBlur}
               placeholder="Name"
               name="name"
               errorMessage={formik.errors.name}
@@ -75,7 +75,7 @@ const AddMember = () => {
             <BaseInput
               value={formik.values.lastName}
               handleValue={formik.handleChange}
-              onBlur={formik.handleBlur}
+              // onBlur={formik.handleBlur}
               placeholder="lastName"
               name="lastName"
               errorMessage={formik.errors.lastName}
@@ -84,7 +84,7 @@ const AddMember = () => {
             <BaseInput
               value={formik.values.email}
               handleValue={formik.handleChange}
-              onBlur={formik.handleBlur}
+              // onBlur={formik.handleBlur}
               placeholder="Email"
               name="email"
               errorMessage={formik.errors.email}
@@ -134,7 +134,7 @@ const AddMember = () => {
           <BaseInput
             value={formik.values.rate}
             handleValue={formik.handleChange}
-            onBlur={formik.handleBlur}
+            // onBlur={formik.handleBlur}
             placeholder="10"
             name="rate"
             errorMessage={formik.errors.rate}
@@ -150,7 +150,7 @@ const AddMember = () => {
           <SubmitBTN label="Add menber" handlesubmit={formik.handleSubmit} />
         </div>
       </div>
-    </div>
+    </GeneralContainer>
   );
 };
 

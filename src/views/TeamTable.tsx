@@ -1,7 +1,7 @@
-import Loading from '../components/UI/Loading';
 import fetch from '../utils/fetch';
 import { useEffect, useState } from 'react';
 import { GetMember } from '../utils/types';
+import GeneralContainer from '../components/UI/GeneralContainer';
 
 const TeamTable = () => {
   const [member, setMember] = useState<GetMember[]>([]);
@@ -17,11 +17,8 @@ const TeamTable = () => {
     getSkills();
   }, []);
   return (
-    <div className="container mx-auto p-8 bg-white border border-gray-200 border-1 rounded-md">
-      <div className=" flex flex-wrap sm:justify-between pb-8 md:pb-14 gap-y-3 sm:gap-0 ">
-        <span className="text-black font-extrabold ">Team</span>
-      </div>
-      <div className=" overflow-x-scroll">
+    <GeneralContainer title="Team">
+      <div className="overflow-x-scroll">
         <table className="min-w-full table-fixed">
           <thead>
             <tr className="border-b-2 border-gray-300">
@@ -57,7 +54,7 @@ const TeamTable = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </GeneralContainer>
   );
 };
 export default TeamTable;

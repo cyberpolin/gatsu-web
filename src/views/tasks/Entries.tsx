@@ -1,9 +1,10 @@
 import useEntries from '../../utils/hooks/UseEntries';
-import Input from '../../components/UI/Input';
 import { useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import PickDate from '../../components/PickDate';
 import ProjectSelector from './ProjectSelector';
+import BaseInput from '../../components/UI/BaseInput';
+import { set } from 'lodash';
 function Entries() {
   const { entries, addEntry } = useEntries();
 
@@ -33,17 +34,19 @@ function Entries() {
       <div className="border w-full rounded-md p-10 mt-6 bg-slate-50 ">
         <div className="border p-2">
           <div className=" grid grid-cols-4 gap-4">
-            <Input
-              name="En que trabajaste hoy..."
-              onChange={(e) => setTask(e.target.value)}
+            <BaseInput
+              name="Task"
+              placeholder="En que trabajaste hoy..."
+              handleValue={(e) => setTask(e.target.value)}
               value={task}
             />
-            <span className="flex ">
-              <Input
-                className="mr-2"
-                name="Cuantas horas"
-                onChange={(e) => setHours(parseInt(e.target.value))}
+            <span className="flex gap-x-2">
+              <BaseInput
+                name="Hours"
+                inputType="number"
+                placeholder="Cuantas horas"
                 value={hours}
+                handleValue={(newValue) => setHours(() => Number(newValue))}
               />
               <PickDate
                 selectedDate={selectedDate}
