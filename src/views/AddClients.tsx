@@ -15,8 +15,18 @@ const AddClients = () => {
   };
   return (
     <GeneralContainer title="Add Clients">
-      <BaseInput placeholder="Clients Name" handleValue={console.log} />
-      <BaseInput placeholder="Clients email" handleValue={console.log} />
+      <BaseInput
+        placeholder="Clients Name"
+        handleValue={console.log}
+        name="name"
+        value={''}
+      />
+      <BaseInput
+        placeholder="Clients email"
+        handleValue={console.log}
+        name="email"
+        value={''}
+      />
       <SubmitBTN label="Save" handlesubmit={SubmitClients}></SubmitBTN>
     </GeneralContainer>
   );
