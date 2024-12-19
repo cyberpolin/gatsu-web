@@ -46,10 +46,19 @@ const Login = () => {
         <form>
           <div className="text-left divide-y-[15px] divide-transparent">
             {showUserName && (
-              <BaseInput placeholder="Username" handleValue={setUsername} />
+              <BaseInput
+                placeholder="Username"
+                handleValue={(e) => setUsername(e.target.value)}
+              />
             )}
-            <BaseInput placeholder="Email" handleValue={setEmail} />
-            <BaseInput placeholder="Password" handleValue={setPassword} />
+            <BaseInput
+              placeholder="Email"
+              handleValue={(e) => setEmail(e.target.value)}
+            />
+            <BaseInput
+              placeholder="Password"
+              handleValue={(e) => setPassword(e.target.value)}
+            />
           </div>
           <p>
             {error && <span className="text-red-500 text-sm">{error}</span>}

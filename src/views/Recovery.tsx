@@ -25,6 +25,8 @@ const Recovey = () => {
         </p>
         <form>
           <BaseInput
+            name="email"
+            value=""
             placeholder="Email"
             inputType="email"
             handleValue={console.log}

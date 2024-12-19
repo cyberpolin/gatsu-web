@@ -44,7 +44,10 @@ function App() {
         <Link to="/clients/new">New Client</Link>
       </div>
 
-      <BaseInput placeholder="Buscar" handleValue={setSearch} />
+      <BaseInput
+        placeholder="Buscar"
+        handleValue={(e) => setSearch(e.target.value)}
+      />
       {/* propose a list of clients usinf clientData json should look like mobile */}
       <div className="w-full overflow-scroll">
         {listData.map((client: ClientType, index: number) => (

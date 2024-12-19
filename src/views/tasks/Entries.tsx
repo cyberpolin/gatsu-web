@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import PickDate from '../../components/PickDate';
 import ProjectSelector from './ProjectSelector';
 import BaseInput from '../../components/UI/BaseInput';
+import { set } from 'lodash';
 function Entries() {
   const { entries, addEntry } = useEntries();
 
@@ -34,14 +35,17 @@ function Entries() {
         <div className="border p-2">
           <div className=" grid grid-cols-4 gap-4">
             <BaseInput
+              name="Task"
               placeholder="En que trabajaste hoy..."
-              handleValue={setTask}
+              handleValue={(e) => setTask(e.target.value)}
+              value={task}
             />
             <span className="flex gap-x-2">
               <BaseInput
+                name="Hours"
                 inputType="number"
                 placeholder="Cuantas horas"
-                defaultValue={0}
+                value={hours}
                 handleValue={(newValue) => setHours(() => Number(newValue))}
               />
               <PickDate
