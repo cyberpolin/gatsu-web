@@ -1,10 +1,10 @@
 import Loading from '../components/UI/Loading';
 import fetch from '../utils/fetch';
-import { Member, Skill } from '../utils/types';
 import { useEffect, useState } from 'react';
+import { GetMember } from '../utils/types';
 
 const TeamTable = () => {
-  const [member, setMember] = useState<Member[]>([]);
+  const [member, setMember] = useState<GetMember[]>([]);
   const getSkills = async () => {
     try {
       const { data } = await fetch.get('/developers');
@@ -47,7 +47,7 @@ const TeamTable = () => {
                 </td>
                 <td className="py-2 px-4 text-sm text-gray-700">{name}</td>
                 <td className="py-2 px-4 text-sm text-gray-700 truncate max-w-[150px] md:max-w-[10px]">
-                  {skills.map((skill: any) => skill.name).join(', ')}
+                  {skills.map((skill) => skill.name).join(', ')}
                 </td>
                 <td className="py-2 px-4 text-sm text-gray-700 text-right">
                   {rate}

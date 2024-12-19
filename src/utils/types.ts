@@ -31,7 +31,16 @@ export interface InvoiceData {
   concepts: Concept[];
 }
 
-export type Member = {
+export type GetMember = {
+  id?: string;
+  name: string;
+  lastName: string;
+  email: string;
+  rate: number;
+  skills: Skill[];
+};
+
+export type AddMember = {
   id?: string;
   name: string;
   lastName: string;
@@ -39,6 +48,7 @@ export type Member = {
   rate: number;
   skills: string[];
 };
+
 export interface Skill {
   id: string;
   name: string;

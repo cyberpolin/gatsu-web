@@ -6,7 +6,7 @@ import fetch from '../utils/fetch';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { Skill, Member } from '../utils/types';
+import { Skill, AddMember as Member } from '../utils/types';
 const validationMenber = Yup.object({
   name: Yup.string().required('First Name is required'),
   lastName: Yup.string().required('Last Name is required'),
