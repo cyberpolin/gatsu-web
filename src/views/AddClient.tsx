@@ -12,12 +12,11 @@ const validation = Yup.object({
     .email('Invalid email address')
     .required('Email is required'),
 });
-const AddClients = () => {
+const AddClient = () => {
   const [checked, setChecked] = useState(false);
   const SubmitClients = async (person: { name: string; email: string }) => {
     try {
       const { data } = await fetch.post('/clients', person);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -74,4 +73,4 @@ const AddClients = () => {
   );
 };
 
-export default AddClients;
+export default AddClient;
