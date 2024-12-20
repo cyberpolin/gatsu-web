@@ -4,7 +4,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import PickDate from '../../components/PickDate';
 import ProjectSelector from './ProjectSelector';
 import BaseInput from '../../components/UI/BaseInput';
-import { set } from 'lodash';
 function Entries() {
   const { entries, addEntry } = useEntries();
 

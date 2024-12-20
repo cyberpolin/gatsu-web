@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Checkbox } from 'react-ionicons';
 interface InputProps {
