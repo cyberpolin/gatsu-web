@@ -1,8 +1,10 @@
 import GeneralContainer from '../components/UI/GeneralContainer';
 import type { Concept } from '../utils/types';
 import currency from 'currency.js';
-
+import SkeletonRow from '../components/SkeletonRow';
+import { useState } from 'react';
 const BillTable = () => {
+  const [loading, setLoading] = useState(false);
   const data = {
     from: {
       name: 'John Doe',
@@ -123,6 +125,19 @@ const BillTable = () => {
                 </td>
               </tr>
             ))}
+            {false && (
+              <>
+                <SkeletonRow
+                  elementLength={concepts.length}
+                  content={[
+                    { td: 'w-1/12', skeleton: 'w-6 ml-auto' },
+                    { td: 'w-5/12', skeleton: 'w-3/4' },
+                    { td: 'w-5/12', skeleton: 'w-3/4 ml-auto' },
+                    { td: 'w-1/12', skeleton: 'w-15 ml-auto' },
+                  ]}
+                />
+              </>
+            )}
           </tbody>
           <tfoot className="">
             <tr>
