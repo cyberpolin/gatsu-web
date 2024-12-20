@@ -2,16 +2,19 @@ import fetch from '../utils/fetch';
 import { useEffect, useState } from 'react';
 import { GetMember } from '../utils/types';
 import GeneralContainer from '../components/UI/GeneralContainer';
-
+import SkeletonRow from '../components/SkeletonRow';
 const TeamTable = () => {
   const [member, setMember] = useState<GetMember[]>([]);
+  const [loading, setLoading] = useState(false);
   const getSkills = async () => {
+    setLoading(true);
     try {
       const { data } = await fetch.get('/developers');
       setMember(data);
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
   useEffect(() => {
     getSkills();
@@ -51,6 +54,19 @@ const TeamTable = () => {
                 </td>
               </tr>
             ))}
+            {loading && (
+              <>
+                <SkeletonRow
+                  elementLength={member.length}
+                  content={[
+                    { td: 'w-1/12', skeleton: 'w-6 ml-auto' },
+                    { td: 'w-5/12', skeleton: 'w-3/4' },
+                    { td: 'w-5/12', skeleton: 'w-full' },
+                    { td: 'w-1/12', skeleton: 'w-8 ml-auto' },
+                  ]}
+                />
+              </>
+            )}
           </tbody>
         </table>
       </div>
