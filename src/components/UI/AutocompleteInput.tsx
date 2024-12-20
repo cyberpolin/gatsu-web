@@ -77,17 +77,29 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       const singleValue = inputValue.split(',');
       const newSkills = await Promise.all(
         singleValue.map(async (value) => {
-          const newSuggestions = getSuggestions(value);
-          const capitalizeValue =
-            value.charAt(0).toUpperCase() + value.slice(1);
-          const newSkill =
-            newSuggestions[0]?.name === value
-              ? newSuggestions[0]
-              : postSkills(capitalizeValue);
-          return newSkill;
+          try {
+            const capitalizeValue =
+              value.charAt(0).toUpperCase() + value.slice(1);
+            const newSuggestions = getSuggestions(capitalizeValue);
+            const newSkill =
+              newSuggestions[0]?.name === capitalizeValue
+                ? newSuggestions[0]
+                : await postSkills(capitalizeValue);
+            return newSkill;
+          } catch (error) {
+            console.error(`Failed to process value: ${value}`, error);
+            return null;
+          }
         }),
       );
-      newSkills.forEach((skill) => handleValue(skill));
+
+      const uniqueSkills = Array.from(
+        new Set(newSkills.map((skill) => skill?.name)),
+      ).map((name) => {
+        return newSkills.find((skill) => skill.name === name);
+      });
+
+      uniqueSkills.forEach((skill) => handleValue(skill));
       setInputValue('');
     }
   };
