@@ -62,7 +62,6 @@ const ClientTable = () => {
   const updateClient = async (id: string, name: string, email: string) => {
     try {
       await fetch.patch(`/clients/${id}`, { name, email });
-      console.log('updated', name, email);
       getClients();
     } catch (error) {
       console.error(error);
@@ -88,7 +87,6 @@ const ClientTable = () => {
   useEffect(() => {
     getClients();
   }, []);
-  console.log('clients', currentClient);
   return (
     <GeneralContainer title="Clients">
       <div className="overflow-x-scroll">
@@ -106,7 +104,7 @@ const ClientTable = () => {
           <tbody>
             {clients.map(({ id, name, email, isDeleted }) => (
               <tr key={id} className="even:bg-gray-100 odd:bg-white">
-                <td className="py-2 px-4 text-sm text-gray-700">
+                <td className="py-2 px-4 text-sm text-gray-700 w-1/3">
                   <span
                     className={`${
                       isOpen && id === currentClient.id
@@ -129,7 +127,7 @@ const ClientTable = () => {
                     />
                   )}
                 </td>
-                <td className="py-2 px-4 text-sm text-gray-700 truncate">
+                <td className="py-2 px-4 text-sm text-gray-700 truncate w-1/3">
                   <span
                     className={`${
                       isOpen && id === currentClient.id
@@ -152,7 +150,7 @@ const ClientTable = () => {
                     />
                   )}
                 </td>
-                <td>
+                <td className="py-2 px-4 w-1/3">
                   <div className="flex gap-2 flex-2">
                     <SubmitBTN
                       label={
