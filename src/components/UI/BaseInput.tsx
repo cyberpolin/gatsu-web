@@ -7,6 +7,7 @@ interface InputProps {
   handleValue?: React.ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   >;
+  keyDown?: React.KeyboardEventHandler<HTMLInputElement>;
   styles?: string;
   inputWidth?: string;
   value?: string | number;
@@ -24,6 +25,7 @@ const BaseInput: React.FC<InputProps> = ({
   styles = '',
   inputWidth = '',
   handleValue,
+  keyDown,
   value,
   onBlur,
   errorMessage,
@@ -59,6 +61,7 @@ const BaseInput: React.FC<InputProps> = ({
           type={inputType}
           placeholder={placeholder}
           value={value}
+          onKeyDown={keyDown}
           onChange={handleValue}
           onBlur={onBlur}
           className={twMerge(
