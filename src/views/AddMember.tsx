@@ -54,8 +54,7 @@ const AddMember = () => {
   });
 
   return (
-    <div className="mx-auto px-8 bg-white border border-gray-100 rounded-md">
-      <h1 className="text-xl font-medium mt-5 mb-6">Add team member</h1>
+    <GeneralContainer title="Add team Member">
       <div className="flex flex-col justify-between gap-y-20">
         <div>
           <span className="text-gray-800">Personal information</span>
@@ -151,7 +150,7 @@ const AddMember = () => {
           <SubmitBTN label="Add menber" handlesubmit={formik.handleSubmit} />
         </div>
       </div>
-    </div>
+    </GeneralContainer>
   );
 };
 
