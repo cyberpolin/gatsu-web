@@ -20,7 +20,6 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
   const [skills, setSkills] = useState<Skill[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<Skill[]>([]);
-  const [error, setError] = useState<boolean>(false);
   const [check, setcheck] = useState<boolean>(false);
   const [errorMessaje, setErrorMessaje] = useState<string>('');
 
@@ -65,6 +64,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
     } else {
       setSuggestions([]);
     }
+    setErrorMessaje('');
   }, [inputValue]);
 
   const handleKey = async (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -73,8 +73,9 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       setInputValue(suggestions[0]?.name);
     }
     if (event.key === 'Enter') {
-      handlevalidation();
-      const singleValue = inputValue.split(',');
+      const singleValue = inputValue
+        .split(',')
+        .filter((item) => item.trim() !== '');
       const newSkills = await Promise.all(
         singleValue.map(async (value) => {
           try {
@@ -85,9 +86,13 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
               newSuggestions[0]?.name === capitalizeValue
                 ? newSuggestions[0]
                 : await postSkills(capitalizeValue);
+            setcheck(true);
+            setTimeout(() => {
+              setcheck(false);
+            }, 500);
             return newSkill;
           } catch (error) {
-            console.error(`Failed to process value: ${value}`, error);
+            setErrorMessaje('try again');
             return null;
           }
         }),
@@ -104,18 +109,6 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
     }
   };
 
-  const handlevalidation = () => {
-    setcheck(false);
-    if (inputValue.trim() === '') {
-      setError(true);
-      setErrorMessaje('Empty file');
-      return false;
-    } else {
-      setError(false);
-      setcheck(true);
-    }
-  };
-
   return (
     <div className="w-full">
       <div className={twMerge(`relative w-full fill-green-500 ${inputWidth}`)}>
@@ -123,7 +116,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
           className={twMerge(
             `capitalize absolute bg-transparent border-2 p-2 rounded-md transition-colors duration-300 w-full
         ${
-          error
+          errorMessaje
             ? 'border-red-500'
             : check
             ? 'border-green-500'
@@ -137,7 +130,6 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
           }}
           onKeyDown={handleKey}
           placeholder={placeholder}
-          onBlur={handlevalidation}
         />
         <div className=" capitalize p-2 h-[44px] rounded-md border-2 border-transparent w-full text-gray-400">
           {suggestions[0]?.name}
@@ -150,7 +142,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
           />
         )}
       </div>
-      {error && (
+      {errorMessaje && (
         <p className="text-red-500 text-sm mt-1 ml-2">{errorMessaje}</p>
       )}
     </div>
