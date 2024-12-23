@@ -163,13 +163,13 @@ const ClientTable = () => {
                           : 'Delete ...'
                       }
                       handlesubmit={() => secundaryBTN(id)}
-                      styles="bg-transparent text-red-500 hover:text-red-400"
+                      styles="bg-transparent text-red-500 hover:text-red-400 h-10"
                     />
                     <SubmitBTN
                       label={
                         isOpen && id === currentClient.id ? 'Save' : 'Edit'
                       }
-                      styles="hover:bg-green-400"
+                      styles="hover:bg-green-400 h-10"
                       handlesubmit={() => primaryBTN(id, name, email)}
                     />
                   </div>
@@ -181,9 +181,9 @@ const ClientTable = () => {
                 <SkeletonRow
                   elementLength={clients.length}
                   content={[
-                    { td: 'w-2/12', skeleton: 'w-10 ml-auto' },
-                    { td: 'w-5/12', skeleton: 'w-full' },
-                    { td: 'w-5/12', skeleton: 'w-full' },
+                    { td: 'w-1/3', skeleton: 'w-full' },
+                    { td: 'w-1/3', skeleton: 'w-full' },
+                    { td: 'w-1/3', skeleton: 'w-full' },
                   ]}
                 />
               </>
