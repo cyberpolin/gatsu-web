@@ -16,6 +16,7 @@ import BillTable from './views/BillTable';
 import TeamTable from './views/TeamTable';
 import Clients from './views/clients/Clients';
 import SkillsManager from './views/SkillsManager';
+import ProjectsTable from './views/ProjectsTable';
 
 const ProtectedRoute = (props: any) => {
   const { redirectPath = '/login', children } = props;
@@ -57,6 +58,7 @@ root.render(
           <Route path="/add-member" element={<AddMember />} />
           <Route path={'/bill-details'} element={<BillTable />} />
           <Route path={'/skill-manager'} element={<SkillsManager />} />
+          <Route path={'/projects'} element={<ProjectsTable />} />
         </Route>
         <Route path={'/login'} element={<Login />} />
         <Route path={'/logout'} element={<Logout />} />
