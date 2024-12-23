@@ -76,7 +76,7 @@ const AddMember = () => {
             <BaseInput
               value={formik.values.lastName}
               handleValue={formik.handleChange}
-              // onBlur={formik.handleBlur}
+              onBlur={formik.handleBlur}
               placeholder="lastName"
               name="lastName"
               errorMessage={formik.errors.lastName}

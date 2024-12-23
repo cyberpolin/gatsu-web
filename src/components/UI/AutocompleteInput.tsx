@@ -20,7 +20,6 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
   const [skills, setSkills] = useState<Skill[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<Skill[]>([]);
-  const [error, setError] = useState<boolean>(false);
   const [check, setcheck] = useState<boolean>(false);
   const [errorMessaje, setErrorMessaje] = useState<string>('');
 
@@ -65,6 +64,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
     } else {
       setSuggestions([]);
     }
+    setErrorMessaje('');
   }, [inputValue]);
 
   const handleKey = async (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -73,34 +73,39 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
       setInputValue(suggestions[0]?.name);
     }
     if (event.key === 'Enter') {
-      handlevalidation();
-      const singleValue = inputValue.split(',');
+      const singleValue = inputValue
+        .split(',')
+        .filter((item) => item.trim() !== '');
       const newSkills = await Promise.all(
         singleValue.map(async (value) => {
-          const newSuggestions = getSuggestions(value);
-          const capitalizeValue =
-            value.charAt(0).toUpperCase() + value.slice(1);
-          const newSkill =
-            newSuggestions[0]?.name === value
-              ? newSuggestions[0]
-              : postSkills(capitalizeValue);
-          return newSkill;
+          try {
+            const capitalizeValue =
+              value.charAt(0).toUpperCase() + value.slice(1);
+            const newSuggestions = getSuggestions(capitalizeValue);
+            const newSkill =
+              newSuggestions[0]?.name === capitalizeValue
+                ? newSuggestions[0]
+                : await postSkills(capitalizeValue);
+            setcheck(true);
+            setTimeout(() => {
+              setcheck(false);
+            }, 500);
+            return newSkill;
+          } catch (error) {
+            setErrorMessaje('try again');
+            return null;
+          }
         }),
       );
-      newSkills.forEach((skill) => handleValue(skill));
-      setInputValue('');
-    }
-  };
 
-  const handlevalidation = () => {
-    setcheck(false);
-    if (inputValue.trim() === '') {
-      setError(true);
-      setErrorMessaje('Empty file');
-      return false;
-    } else {
-      setError(false);
-      setcheck(true);
+      const uniqueSkills = Array.from(
+        new Set(newSkills.map((skill) => skill?.name)),
+      ).map((name) => {
+        return newSkills.find((skill) => skill.name === name);
+      });
+
+      uniqueSkills.forEach((skill) => handleValue(skill));
+      setInputValue('');
     }
   };
 
@@ -111,7 +116,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
           className={twMerge(
             `capitalize absolute bg-transparent border-2 p-2 rounded-md transition-colors duration-300 w-full
         ${
-          error
+          errorMessaje
             ? 'border-red-500'
             : check
             ? 'border-green-500'
@@ -125,7 +130,6 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
           }}
           onKeyDown={handleKey}
           placeholder={placeholder}
-          onBlur={handlevalidation}
         />
         <div className=" capitalize p-2 h-[44px] rounded-md border-2 border-transparent w-full text-gray-400">
           {suggestions[0]?.name}
@@ -138,7 +142,7 @@ const AutocompleteInput: React.FC<AutocompleteInput> = ({
           />
         )}
       </div>
-      {error && (
+      {errorMessaje && (
         <p className="text-red-500 text-sm mt-1 ml-2">{errorMessaje}</p>
       )}
     </div>
