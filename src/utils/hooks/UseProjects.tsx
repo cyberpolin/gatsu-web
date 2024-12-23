@@ -6,6 +6,7 @@ export type Project = {
   name: string;
   description: string;
   clientId?: string;
+  isDeleted?: boolean;
 };
 
 const url = '/projects';
@@ -29,7 +30,10 @@ const useProjects = () => {
   const getProjects = async () => {
     try {
       const { data } = await fetch.get(`${url}`);
-      setProjects(data);
+      const dataFiltered = data.filter(
+        (project: Project) => !project.isDeleted,
+      );
+      setProjects(dataFiltered);
     } catch (error) {
       console.error(error);
     }

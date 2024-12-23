@@ -8,22 +8,22 @@ const ProjectSelector = ({
   onProjectSelected: (id: string) => void;
 }) => {
   const { projects } = useProjects();
-  console.log('>>', projects);
 
   return (
-    <div>
+    <>
       <select
         className="border border-gray-300 rounded-md p-2 w-full my-2"
         value={selectedProject || ''}
         onChange={(e) => onProjectSelected(e.target.value)}
       >
+        {!selectedProject && <option value="">Select a project</option>}
         {projects.map((project) => (
           <option key={project.id} value={project.id}>
             {project.name}
           </option>
         ))}
       </select>
-    </div>
+    </>
   );
 };
 
