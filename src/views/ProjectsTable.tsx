@@ -108,8 +108,6 @@ const ProjectsTable = () => {
   useEffect(() => {
     getProjects();
   }, []);
-
-  console.log('loading', loading);
   return (
     <GeneralContainer title="Projects">
       <div className="overflow-x-scroll">
@@ -182,13 +180,13 @@ const ProjectsTable = () => {
                           : 'Delete ...'
                       }
                       handlesubmit={() => secundaryBTN(id)}
-                      styles="bg-transparent text-red-500 hover:text-red-400"
+                      styles="bg-transparent text-red-500 hover:text-red-400 h-10"
                     />
                     <SubmitBTN
                       label={
                         isOpen && id === currentProject.id ? 'Save' : 'Edit'
                       }
-                      styles="hover:bg-green-400"
+                      styles="hover:bg-green-400 h-10"
                       handlesubmit={() =>
                         primaryBTN(id, name, description, clientId)
                       }
