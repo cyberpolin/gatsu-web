@@ -41,6 +41,7 @@ const ClientTable = () => {
       setTimeout(() => {
         resetForm();
         setChecked(false);
+        setIsOpen(false);
       }, 500);
     },
   });
@@ -49,6 +50,7 @@ const ClientTable = () => {
     try {
       const { data } = await fetch.get('/clients');
       setClients(data);
+
       return data;
     } catch (error) {
       console.error(error);
@@ -59,6 +61,7 @@ const ClientTable = () => {
     try {
       await fetch.delete(`/clients/${id}`);
       getClients();
+      setIsOpen(false);
     } catch (error) {
       console.error(error);
     }
