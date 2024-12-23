@@ -44,6 +44,7 @@ const ProjectsTable = () => {
       setTimeout(() => {
         resetForm();
         setChecked(false);
+        setIsOpen(false);
       }, 500);
     },
   });
@@ -62,6 +63,7 @@ const ProjectsTable = () => {
     try {
       await fetch.delete(`/projects/${id}`);
       getProjects();
+      setIsOpen(false);
     } catch (error) {
       console.error(error);
     }
