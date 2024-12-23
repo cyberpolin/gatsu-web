@@ -19,7 +19,7 @@ const AddProject = () => {
     clientId: string;
   }) => {
     try {
-      const { data } = await fetch.post('/projects', projects);
+      await fetch.post('/projects', projects);
     } catch (error) {
       console.error(error);
     }

@@ -91,7 +91,7 @@ const Sidebar = ({ menuOpen, toggleMenu }: MenuProps) => {
           }
         />
       ),
-      link: '/orders',
+      link: '/add-project',
     },
     {
       title: 'Billing',
