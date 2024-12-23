@@ -1,5 +1,3 @@
-import { twMerge } from 'tailwind-merge';
-
 type content = {
   td: string;
   skeleton: string;

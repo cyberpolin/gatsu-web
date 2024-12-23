@@ -125,7 +125,7 @@ const BillTable = () => {
                 </td>
               </tr>
             ))}
-            {false && (
+            {loading && (
               <>
                 <SkeletonRow
                   elementLength={concepts.length}
