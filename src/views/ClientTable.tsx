@@ -1,6 +1,7 @@
 import GeneralContainer from '../components/UI/GeneralContainer';
 import BaseInput from '../components/UI/BaseInput';
 import SubmitBTN from '../components/UI/SubmitBTN';
+import SkeletonRow from '../components/SkeletonRow';
 import fetch from '../utils/fetch';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
@@ -26,6 +27,7 @@ const ClientTable = () => {
     id: '',
   });
   const [checked, setChecked] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -43,6 +45,7 @@ const ClientTable = () => {
     },
   });
   const getClients = async () => {
+    setLoading(true);
     try {
       const { data } = await fetch.get('/clients');
       setClients(data);
@@ -50,6 +53,7 @@ const ClientTable = () => {
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
   const deleteClient = async (id: string) => {
     try {
@@ -172,6 +176,18 @@ const ClientTable = () => {
                 </td>
               </tr>
             ))}
+            {loading && (
+              <>
+                <SkeletonRow
+                  elementLength={clients.length}
+                  content={[
+                    { td: 'w-2/12', skeleton: 'w-10 ml-auto' },
+                    { td: 'w-5/12', skeleton: 'w-full' },
+                    { td: 'w-5/12', skeleton: 'w-full' },
+                  ]}
+                />
+              </>
+            )}
           </tbody>
         </table>
       </div>
