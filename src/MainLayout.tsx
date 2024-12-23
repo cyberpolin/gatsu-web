@@ -109,6 +109,21 @@ const Sidebar = ({ menuOpen, toggleMenu }: MenuProps) => {
       link: '/clients',
     },
     {
+      title: 'Add Clients',
+      icon: (
+        <CashOutline
+          style={{
+            width: '18px',
+            height: '18px',
+          }}
+          cssClasses={
+            '!text-green-500 mr-2 group-hover:translate-x-2 transition-all delay-100 duration-300 '
+          }
+        />
+      ),
+      link: '/add-client',
+    },
+    {
       title: 'Billing Example',
       icon: (
         <CashOutline
