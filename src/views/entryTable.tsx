@@ -67,10 +67,10 @@ const EntryTable = () => {
         '/tasks/project/9ce3becf-95d2-4e1e-8312-dc34906a6af2',
       );
       setEntries(data);
+      setLoading(false);
       return data;
     } catch (error) {
       console.error(error);
-    } finally {
       setLoading(false);
     }
   };
