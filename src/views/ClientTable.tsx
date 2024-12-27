@@ -54,8 +54,9 @@ const ClientTable = () => {
       return data;
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
   const deleteClient = async (id: string) => {
     try {
