@@ -54,9 +54,9 @@ const ProjectsTable = () => {
       const { data } = await fetch.get('/projects');
       const activeProjects = data.filter((value: Projects) => !value.isDeleted);
       setProjects(activeProjects);
+      setLoading(false);
     } catch (error) {
       console.error(error);
-    } finally {
       setLoading(false);
     }
   };
