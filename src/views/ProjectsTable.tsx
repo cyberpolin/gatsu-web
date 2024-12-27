@@ -56,8 +56,9 @@ const ProjectsTable = () => {
       setProjects(activeProjects);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
   const deleteProject = async (id: string) => {
     try {
