@@ -14,12 +14,22 @@ type Entry = {
   hours: number;
   date: Date;
 };
+
+function formatDate(timestamp: Date): string {
+  const date = new Date(timestamp);
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: '2-digit',
+  };
+  return date.toLocaleDateString('en-US', options);
+}
+
 const validation = Yup.object().shape({
   task: Yup.string().required(),
   hours: Yup.number().required(),
   date: Yup.date().required(),
 });
-
 const EntryTable = () => {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -177,7 +187,7 @@ const EntryTable = () => {
                         : 'min-w-16 text-center sm:text-left'
                     }`}
                   >
-                    {date.toString()}
+                    {formatDate(date)}
                   </span>
                   {isOpen && id === currentEntry.id && (
                     <PickDate
