@@ -50,14 +50,12 @@ const ClientTable = () => {
     try {
       const { data } = await fetch.get('/clients');
       setClients(data);
-
+      setLoading(false);
       return data;
     } catch (error) {
       console.error(error);
-    } finally {
       setLoading(false);
     }
-  };
   const deleteClient = async (id: string) => {
     try {
       await fetch.delete(`/clients/${id}`);
