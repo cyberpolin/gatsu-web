@@ -154,6 +154,21 @@ const Sidebar = ({ menuOpen, toggleMenu }: MenuProps) => {
       link: '/add-member',
     },
     {
+      title: 'Projects',
+      icon: (
+        <CodeOutline
+          style={{
+            width: '18px',
+            height: '18px',
+          }}
+          cssClasses={
+            '!text-green-500 mr-2 group-hover:translate-x-2 transition-all delay-100 duration-300 '
+          }
+        />
+      ),
+      link: '/projects',
+    },
+    {
       title: 'Log out',
       icon: (
         <OpenOutline
