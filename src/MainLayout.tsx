@@ -76,7 +76,7 @@ const Sidebar = ({ menuOpen, toggleMenu }: MenuProps) => {
           }
         />
       ),
-      link: '/clients',
+      link: '/client',
     },
     {
       title: 'Projects',

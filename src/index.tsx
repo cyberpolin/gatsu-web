@@ -14,7 +14,7 @@ import Logout from './views/Logout';
 import AddMember from './views/AddMember';
 import BillTable from './views/BillTable';
 import TeamTable from './views/TeamTable';
-import Clients from './views/clients/Clients';
+import ClientTable from './views/ClientTable';
 import SkillsManager from './views/SkillsManager';
 
 const ProtectedRoute = (props: any) => {
@@ -51,7 +51,7 @@ root.render(
           }
         >
           <Route path="/" element={<AdminDashboard />} />
-          <Route path="/clients" element={<Clients />} />
+          <Route path="/client" element={<ClientTable />} />
           <Route path="/team" element={<TeamTable />} />
           <Route path="/tasks" element={<Entries />} />
           <Route path="/add-member" element={<AddMember />} />
